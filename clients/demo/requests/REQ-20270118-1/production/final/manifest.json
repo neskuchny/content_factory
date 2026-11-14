@@ -1,0 +1,57 @@
+{
+  "id": "REQ-20270118-1",
+  "client": "demo",
+  "_label": "FICTIONAL demo client (Brewline Demo Roasters)",
+  "flow": "f18-code-film",
+  "engine": "code_film (Canvas 2D, Playwright + Chromium headless, software raster)",
+  "duration": 18.0,
+  "frames": 540,
+  "fps": 30,
+  "size": "1080x1920",
+  "seed": 20270118,
+  "versions": {
+    "playwright": "1.63.0",
+    "chromium": "153.0.8010.12",
+    "ffmpeg": "6.1.1",
+    "python": "3.13.17",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "node": "22.22.0"
+  },
+  "files": {
+    "video": "REQ-20270118-1.mp4 (not kept in the repo; rebuilt by the steps below)",
+    "publish": "export.py --preset reels --max-mb 40: 1080x1920, H.264 yuv420p, AAC 48 kHz stereo, -14.0 LUFS, -1.2 dBTP, 6.4 MB",
+    "cover": "final/cover.jpg"
+  },
+  "tracks": [
+    {"t0": 0.0, "t1": 18.0, "component": "scene/main.mjs", "data": "data/timeline.json", "note": "set, radio, beans, titles: every frame is a pure function of (t, seed, timeline)"},
+    {"t0": 0.1, "t1": 2.55, "component": "title T1", "text": "When is your coffee at its best?", "keyword": "best"},
+    {"t0": 2.7, "t1": 5.05, "component": "title T2", "text": "Day 0: roasted on site", "keyword": "Day 0"},
+    {"t0": 5.2, "t1": 8.4, "component": "title T3", "text": "We rest the beans 5 days", "keyword": "5 days"},
+    {"t0": 8.6, "t1": 11.3, "component": "title T4", "text": "Then every bag gets its roast date", "keyword": "roast date"},
+    {"t0": 11.5, "t1": 14.95, "component": "title T5", "text": "Best brewed about 5 to 28 days after roast", "keyword": "5 to 28 days"},
+    {"t0": 15.1, "t1": 18.0, "component": "title T6 + handle + demo mark", "text": "Check the roast date on yours / @example_brewline / Fictional demo brand", "keyword": "roast date"}
+  ],
+  "fonts": [
+    {"family": "Fraunces", "weight": 600, "file": "scene/fonts/fraunces-latin-600-normal.woff2", "md5": "b8dca52ca5f9e27747e5db1cf8820465", "license": "OFL-1.1 (scene/fonts/OFL-fraunces.txt)", "source": "npm @fontsource/fraunces 5.3.0"},
+    {"family": "Inter", "weight": 700, "file": "scene/fonts/inter-latin-700-normal.woff2", "md5": "8ca0a51552960933d0fd52c19175cbe9", "license": "OFL-1.1 (scene/fonts/OFL-inter.txt)", "source": "npm @fontsource/inter 5.3.0"}
+  ],
+  "audio": {
+    "source": "code",
+    "script": "project/sound.py (seed 20270118)",
+    "events": "audio/sfx_events.json",
+    "mix_raw_md5": "1b19426fcb624eef1bc2ba2804444642",
+    "master": {"lufs": -14.0, "true_peak_dbtp": -1.2, "chain": "audio.py --replace -> loudness.py -I -14 --tp -1 -> export.py --preset reels"},
+    "tracks": []
+  },
+  "generations": [],
+  "credits": 0,
+  "label_ai": false,
+  "voice": null,
+  "music": null,
+  "stock": [],
+  "logo": {"enabled": false, "reason": "brand/assets/logo.svg is not part of the demo"},
+  "grade": {"lut": null, "strength": 0, "grain": "static paper grain, 512x512 tile from seeded noise, luminance +-2 % (scene/grain.mjs)"},
+  "palette": {"cream": "#F6EFE6", "espresso": "#2B1D14", "copper": "#C26A2E", "kraft": "#E1BA9C", "cream_dark": "#E6DED5", "esp_light": "#54473E", "bean": "#51301B"},
+  "checks": "data/checks_report.json"
+}

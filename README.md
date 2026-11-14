@@ -55,7 +55,7 @@ Titles, numbers and logos are always drawn by code, never generated. Click a cov
 | Council at the Table | Code film, 2D paper theatre on Canvas ([`f18`](flows/f18-code-film.md)): every object arrives on a visible thread from a spool. | 0 | Stills and draft reviewed by QC |
 | Frost | Code film, 3D in three.js: a lamp thaws a circle in frosted glass, behind it a shop floor of AI staff. Rendered on CPU in 11.5 min. | 0 | Stills and draft reviewed by QC |
 | Hive | Code film, 3D in three.js: paper-lantern bees, a "stop / run" lever, a lock that only a human opens. Rendered on CPU in 20 min. | 0 | Stills and draft reviewed by QC |
-| Freshness dial | Code film, 2D, for the fictional demo roaster. Every on-screen claim is cited from the demo product base. | 0 | {{DEMO_QC}} |
+| Freshness dial | Code film, 2D, for the fictional demo roaster. Every on-screen claim is cited from the demo product base. | 0 | QC: PASS with fixes · jury 7/9 · fixes applied |
 
 Credits are Higgsfield credits; the dollar figure uses the fixed rate in
 [`config/pricing.yaml`](config/pricing.yaml). Sound in all five is made by code. Videos are
@@ -212,6 +212,28 @@ factory reads and writes before you onboard anyone real.
 Other run modes (scheduled cloud tasks, ticks via GitHub Actions, a server with Telegram) and
 the checklist for a real client are in [`docs/04-setup.md`](docs/04-setup.md). To add a client,
 copy `templates/client/` or ask the onboarding agent.
+
+## A complete example: from brief to approved video
+
+[`clients/demo/requests/REQ-20270118-1/`](clients/demo/requests/REQ-20270118-1/) is one request taken all
+the way through, so you can read what each agent leaves behind:
+
+| Step | File | Who |
+|---|---|---|
+| The ask | [`brief.md`](clients/demo/requests/REQ-20270118-1/brief.md) | owner |
+| Concept, beats and the facts table (every on-screen claim cited from `product-base/`) | [`beats.md`](clients/demo/requests/REQ-20270118-1/beats.md) | director |
+| The route: 17 steps with a status each | [`harness.md`](clients/demo/requests/REQ-20270118-1/harness.md) | director |
+| Shots, camera, look and sound | [`shotlist.json`](clients/demo/requests/REQ-20270118-1/shotlist.json), [`card.md`](clients/demo/requests/REQ-20270118-1/card.md) | director |
+| The film itself as code (Canvas 2D, deterministic, sound made by code) | [`production/scene/`](clients/demo/requests/REQ-20270118-1/production/scene/), [`production/project/`](clients/demo/requests/REQ-20270118-1/production/project/) | studio |
+| What happened, step by step | [`production/log.md`](clients/demo/requests/REQ-20270118-1/production/log.md) | studio |
+| QC verdict and the jury's score and fixes | [`production/review.md`](clients/demo/requests/REQ-20270118-1/production/review.md) | reviewer |
+| Spend | [`production/costs.md`](clients/demo/requests/REQ-20270118-1/production/costs.md) | studio |
+| Owner decisions at each gate | [`decisions.md`](clients/demo/requests/REQ-20270118-1/decisions.md) | owner |
+
+The result is [`docs/showcase/freshness-dial.mp4`](docs/showcase/freshness-dial.mp4). The owner is
+fictional too: in a real run each gate waits for your answer.
+
+![The dashboard built from the demo client](docs/assets/dashboard-demo.png)
 
 ## What you must bring
 

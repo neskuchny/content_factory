@@ -1,0 +1,206 @@
+{
+  "_label": "FICTIONAL demo client (Brewline Demo Roasters). Every name, handle and fact is invented.",
+  "id": "REQ-20270118-1",
+  "flow": "f18-code-film",
+  "concept": "Freshness dial (beats.md → Concepts #1; decisions.md 2027-01-19)",
+  "note": "Source of truth for timing, layout, texts and sound events. Studio builds production/data/timeline.json from it (harness step 5). Static camera: coordinates are screen pixels at 1080×1920, y down. Values are starting points for the first still; studio may adjust them without changing the meaning of a frame or a cause (card.md §8) and logs every change in production/log.md.",
+  "canvas": {
+    "w": 1080, "h": 1920, "fps": 30, "duration": 18.0, "frames": 540,
+    "draft": { "w": 540, "h": 960, "rule": "same detail: sizes, cut-edge noise and shadows scale by W/1080" },
+    "seed": 20270118,
+    "seed_note": "mulberry32 for grain, cut edges and bean paths; Math.random, Date and performance.now are forbidden"
+  },
+  "safe": {
+    "top": 250, "bottom_y": 1520, "sides": 60,
+    "text_box": { "x": [60, 940], "y": [250, 1520] },
+    "rule": "every text box (titles, scene labels, end card) inside text_box on every frame where it is visible; x ≤ 940 keeps text clear of the Reels buttons"
+  },
+  "palette": {
+    "cream": "#F6EFE6", "espresso": "#2B1D14", "copper": "#C26A2E",
+    "kraft": "#E1BA9C", "cream_dark": "#E6DED5", "espresso_light": "#54473E", "bean": "#51301B",
+    "copper_rule": "copper only on the lit band and the keyword of each title"
+  },
+  "fonts": {
+    "title": { "family": "Fraunces", "weight": 600, "size": 68, "line_height": 1.12, "license": "OFL-1.1" },
+    "label": { "family": "Inter", "weight": 700, "license": "OFL-1.1" },
+    "files": "production/scene/fonts/*.woff2 (local; md5 in log.md)"
+  },
+  "world": {
+    "backdrop": { "fill": "cream", "grain": { "tile": 512, "luma": 0.02, "static": true } },
+    "shelf": { "x": [60, 1020], "y": [1040, 1060], "fill": "espresso_light" },
+    "roaster": {
+      "box": { "x": [70, 330], "y": [600, 1040] },
+      "parts": {
+        "hopper": { "x": [160, 250], "y": [640, 720] },
+        "chimney": { "x": [290, 315], "y": [600, 720] },
+        "drum": { "x": [90, 320], "y": [720, 900], "front_disc": { "c": [205, 810], "r": 70, "spokes": 6 } },
+        "door": { "c": [205, 810], "r": 34, "opens": 2.9, "how": "flip on the vertical axis (scaleX 1 → −1), inner side espresso" },
+        "chute": { "from": [260, 860], "to": [380, 960] },
+        "legs": { "y": [900, 1040] }
+      },
+      "fill": "espresso_light", "details": "cream_dark",
+      "rule": "generic pictogram: no brand, no model features (card.md §1)"
+    },
+    "tray": {
+      "ellipse": { "c": [425, 985], "rx": 90, "ry": 28 }, "fill": "espresso_light",
+      "stir_arm": { "thickness": 12, "turns": [3.8, 5.1], "rev_per_s": 0.8 },
+      "tip": { "t": [5.3, 5.8], "deg": 16, "pivot": [515, 985] }
+    },
+    "bin": {
+      "box": { "x": [575, 715], "y": [880, 1040] }, "radius": 16, "fill": "espresso_light",
+      "lid": { "x": [565, 725], "y": [860, 880], "lift_px": 40, "up": [[5.15, 5.85], [8.6, 9.7]] }
+    },
+    "scoop": { "parked": "leaning on the right side of the bin from frame 0", "fill": "cream_dark", "trips": [8.8, 9.4] },
+    "bag": {
+      "box": { "x": [790, 950], "y": [820, 1040] }, "fill": "kraft",
+      "label": { "x": [815, 925], "y": [900, 990], "fill": "cream" },
+      "fold": { "t": [9.85, 10.0], "strip_px": 40 },
+      "imprint": { "text": "ROAST DATE", "bars": 3, "font": "Inter 700 22", "fill": "espresso", "appears": 10.2 },
+      "cta_move": { "t": [15.0, 15.8], "to_centre_x": 540, "scale": 1.35, "bottom_y": 1040 }
+    },
+    "stamp_lever": {
+      "pivot": [1010, 760], "pad_rest": [870, 760], "pad_w": 100,
+      "down": [10.0, 10.2], "impact": 10.2, "squash": 0.04, "up": [10.25, 10.7],
+      "fill": "espresso_light", "pad": "espresso"
+    },
+    "radio": {
+      "body": { "x": [60, 1020], "y": [1090, 1500], "radius": 16, "fill": "espresso" },
+      "dial_face": { "x": [110, 970], "y": [1130, 1310], "radius": 16, "fill": "cream" },
+      "dial": {
+        "x0": 150, "px_per_day": 26, "days": [0, 31],
+        "ticks": { "minor": { "w": 6, "y": [1160, 1188] }, "major_days": [0, 5, 28], "major": { "w": 8, "y": [1150, 1198] } },
+        "numbers": { "days": [0, 5, 28], "font": "Inter 700 44", "y_baseline": 1258, "fill": "espresso" },
+        "band": { "days": [5, 28], "y": [1145, 1270], "unlit": "cream_dark", "lit": "copper", "fade_frames": 3,
+                  "rule": "lit if and only if 5 < needle_day <= 28" }
+      },
+      "needle": { "w": 8, "y": [1135, 1305], "fill": "espresso", "x": "150 + 26 * needle_day" },
+      "knob": { "c": [900, 1430], "r": 62, "fill": "cream_dark", "notches": 12, "deg_per_day": 12,
+                "rule": "knob_deg = 12 * needle_day on every frame; it turns only when the needle moves" },
+      "label": { "text": "DAYS AFTER ROAST", "font": "Inter 700 30, tracking 0.12em", "fill": "cream", "c": [540, 1345] },
+      "grille": { "slots": 5, "x": [120, 780], "y": [1390, 1470], "slot_h": 10, "fill": "espresso_light" }
+    },
+    "title_band": { "x": [60, 940], "y": [260, 520], "align": "left", "max_lines": 2 }
+  },
+  "needle_keys": [
+    { "t": 0.0, "day": 31, "note": "already moving at frame 0" },
+    { "t": 0.2, "day": 28 },
+    { "t": 0.95, "day": 5 },
+    { "t": 1.4, "day": 0 },
+    { "t": 1.48, "day": -0.3, "note": "overshoot" },
+    { "t": 1.6, "day": 0 },
+    { "t": 5.78, "day": 0 },
+    { "t": 5.9, "day": 1 },
+    { "t": 6.28, "day": 1 },
+    { "t": 6.4, "day": 2 },
+    { "t": 6.78, "day": 2 },
+    { "t": 6.9, "day": 3 },
+    { "t": 7.28, "day": 3 },
+    { "t": 7.4, "day": 4 },
+    { "t": 7.78, "day": 4 },
+    { "t": 7.9, "day": 5, "note": "no overshoot: must not pass 5" },
+    { "t": 11.6, "day": 5 },
+    { "t": 13.8, "day": 28 },
+    { "t": 14.2, "day": 28 },
+    { "t": 14.8, "day": 14 },
+    { "t": 18.0, "day": 14 }
+  ],
+  "needle_rule": "monotone cubic (PCHIP) through all keys, so equal neighbouring keys hold still and nothing overshoots except the explicit −0.3 key; the five hops in B3 last 0.12 s each; one detent click on every integer day crossed",
+  "beats": [
+    {
+      "n": 1, "id": "B1", "type": "hook · open loop", "t": [0.0, 2.6], "frames": [0, 77],
+      "action": "needle sweeps 31 → 0; band flashes copper while the needle is inside it",
+      "cause": "the knob turns 12° per day",
+      "frame_0": "whole set: shelf with roaster (still), tray (empty), bin (lid down), bag (open), lever up; radio with needle at day 31 moving left; band unlit; title area empty (T1 from 0.10)",
+      "texts": [{ "id": "T1", "t": [0.1, 2.55] }],
+      "sfx": ["0.00 room tone", "0.00–1.40 detent click per day (31)", "0.20–0.95 warm tone", "1.40 needle settle tap"]
+    },
+    {
+      "n": 2, "id": "B2", "type": "day 0 · roast", "t": [2.6, 5.1], "frames": [78, 152],
+      "action": "drum spins up, door opens, beans pour into the tray, stir arm turns",
+      "cause": "beans leave only through the open door and follow the chute",
+      "events": [
+        { "t": [2.6, 2.9], "what": "drum front disc spins up 0 → 0.8 rev/s" },
+        { "t": 2.9, "what": "door flips open" },
+        { "t": [3.0, 3.8], "what": "40 beans along the chute into the tray; the tray fill grows" },
+        { "t": [3.8, 5.1], "what": "stir arm turns; drum slows down to a stop at 4.4; door closes at 4.4" }
+      ],
+      "texts": [{ "id": "T2", "t": [2.7, 5.05] }],
+      "sfx": ["2.60–4.40 drum rumble", "2.90 door clack", "3.00–3.80 bean pour", "3.80–5.10 stir scrape", "4.40 door closes"]
+    },
+    {
+      "n": 3, "id": "B3", "type": "rest · 5 days", "t": [5.1, 8.5], "frames": [153, 254],
+      "action": "beans go into the bin; then only the needle hops 1 → 5",
+      "cause": "the tray tips toward the lifted lid; one knob click per hop",
+      "events": [
+        { "t": 5.15, "what": "lid lifts 40 px" },
+        { "t": [5.3, 5.8], "what": "tray tips 16°, 25 beans slide into the bin, tray returns" },
+        { "t": 5.85, "what": "lid closes" },
+        { "t": [5.9, 7.9], "what": "five hops; nothing else moves" }
+      ],
+      "texts": [{ "id": "T3", "t": [5.2, 8.4] }],
+      "sfx": ["5.15 lid tap", "5.30–5.80 small pour", "5.85 lid closes", "5.90 / 6.40 / 6.90 / 7.40 / 7.90 single clicks"]
+    },
+    {
+      "n": 4, "id": "B4", "type": "pack · stamp", "t": [8.5, 11.4], "frames": [255, 341],
+      "action": "scoop fills the bag twice, bag top folds, stamp prints the label",
+      "cause": "the scoop carries beans from the bin; the imprint appears on the frame the pad touches the label",
+      "events": [
+        { "t": 8.6, "what": "lid lifts" },
+        { "t": [8.7, 9.2], "what": "scoop trip 1: dip in the bin, arc to the bag, 12 beans pour in at 8.8–9.0" },
+        { "t": [9.2, 9.65], "what": "scoop trip 2: pour at 9.4–9.55; scoop returns to its parking place" },
+        { "t": 9.7, "what": "lid closes" },
+        { "t": [9.85, 10.0], "what": "top 40 px of the bag folds over" },
+        { "t": [10.0, 10.2], "what": "lever swings down; pad lands on the label" },
+        { "t": 10.2, "what": "impact: pad squashes 4 % for 2 frames, bag dips 3 px, imprint 'ROAST DATE' + 3 bars appears" },
+        { "t": [10.25, 10.7], "what": "lever swings back up" }
+      ],
+      "texts": [{ "id": "T4", "t": [8.6, 11.3] }],
+      "sfx": ["8.60 lid", "8.80 / 9.40 scoop dig + patter on paper", "9.85 paper crinkle", "10.20 STAMP THUNK (loudest)", "10.30 lever spring"]
+    },
+    {
+      "n": 5, "id": "B5", "type": "answer · the band", "t": [11.4, 15.0], "frames": [342, 449],
+      "action": "needle glides 5 → 28 through the band, then back to 14",
+      "cause": "the knob turns; the band is copper only while the needle is inside it",
+      "texts": [{ "id": "T5", "t": [11.5, 14.95] }],
+      "sfx": ["11.60–13.80 clicks (23)", "11.60 → warm tone sustains while lit", "14.20–14.80 clicks (14)"]
+    },
+    {
+      "n": 6, "id": "B6", "type": "viewer's step · CTA", "t": [15.0, 18.0], "frames": [450, 539],
+      "action": "props slide out, the bag comes to the centre with its stamped label; hold",
+      "cause": "one object left: the bag with its date",
+      "events": [
+        { "t": [15.0, 15.6], "what": "roaster, tray, bin slide out left (stagger 0.08 s); lever slides out right" },
+        { "t": [15.0, 15.8], "what": "bag to x 540, scale 1.35, standing on the shelf" },
+        { "t": [16.0, 18.0], "what": "hold (2.0 s ≥ hold_min 1.5)" }
+      ],
+      "texts": [{ "id": "T6", "t": [15.1, 18.0] }, { "id": "HANDLE", "t": [15.5, 18.0] }, { "id": "DEMO", "t": [15.5, 18.0] }],
+      "sfx": ["15.00–15.80 paper slides", "warm tone holds", "17.40–18.00 tone fades to −30 dB"]
+    }
+  ],
+  "texts_exact": [
+    { "id": "T1", "text": "When is your coffee at its best?", "keyword": "best", "words": 7, "min_s": 2.35 },
+    { "id": "T2", "text": "Day 0: roasted on site", "keyword": "Day 0", "words": 5, "min_s": 1.85 },
+    { "id": "T3", "text": "We rest the beans 5 days", "keyword": "5 days", "words": 6, "min_s": 2.1 },
+    { "id": "T4", "text": "Then every bag gets its roast date", "keyword": "roast date", "words": 7, "min_s": 2.35 },
+    { "id": "T5", "text": "Best brewed about 5 to 28 days after roast", "keyword": "5 to 28 days", "words": 9, "min_s": 2.85 },
+    { "id": "T6", "text": "Check the roast date on yours", "keyword": "roast date", "words": 6, "min_s": 2.1 }
+  ],
+  "reading_rule": "each title is on screen for at least 0.6 s + 0.25 s per word, and never less than 1.5 s",
+  "scene_labels_exact": ["0", "5", "28", "DAYS AFTER ROAST", "ROAST DATE"],
+  "cta": {
+    "title": "T6",
+    "handle": { "id": "HANDLE", "text": "@example_brewline", "font": "Inter 700 44", "y": 470, "source": "channels.yaml → instagram.url" },
+    "demo_mark": { "id": "DEMO", "text": "Fictional demo brand", "font": "Inter 700 26", "opacity": 0.6, "y": 512, "note": "under the handle, inside the title band" },
+    "logo_layer": { "enabled": false, "reason": "brand/assets/logo.svg is not part of the demo" }
+  },
+  "audio": {
+    "voice": null, "music": null,
+    "source": "code: production/project/sound.py, seed 20270118",
+    "loudest_order": ["10.20 stamp", "1.40 needle settle", "3.00 bean pour"],
+    "tone": { "notes": ["D4", "A4"], "attack_ms": 80, "level": "−10 LU under the effects", "rule": "plays on the same frames as band_lit (±1)" },
+    "master": { "lufs": -14, "true_peak_dbtp": -1 }
+  },
+  "stills_t": [0.0, 0.5, 1.6, 3.3, 4.5, 6.9, 9.1, 10.2, 12.7, 14.8, 17.0],
+  "cover": { "frame_t": 12.7, "crop": "dial close-up, band lit", "title": "Day 5 to 28", "font": "Fraunces 600", "note": "a label, not a claim; built by code" },
+  "fallback": "If the paper-cut reads as 'vector icons with drop shadows' after 3 tries on the stills, ask the owner via the orchestrator: keep it flat (no cut-edge noise, one shadow depth) or stop."
+}

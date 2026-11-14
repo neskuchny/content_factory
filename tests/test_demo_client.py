@@ -30,8 +30,16 @@ CYRILLIC = re.compile("[" + chr(0x400) + "-" + chr(0x4FF) + "]")
 UNIT_ID = re.compile(r"^W\d{2}-[RCSLPVX]\d{2}$")
 
 
+BINARY_SUFFIXES = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".woff", ".woff2", ".ttf", ".otf", ".wav", ".mp3"}
+
+
 def demo_files():
     return sorted(p for p in DEMO.rglob("*") if p.is_file())
+
+
+def demo_text_files():
+    """Demo files that are text (the example request also ships a few images and OFL font files)."""
+    return [p for p in demo_files() if p.suffix.lower() not in BINARY_SUFFIXES]
 
 
 def load_yaml(path):
@@ -111,7 +119,7 @@ class Parsing(unittest.TestCase):
         for f in demo_files():
             if f.suffix == ".json":
                 with self.subTest(file=f.name):
-                    self.assertIsInstance(json.loads(f.read_text(encoding="utf-8")), dict)
+                    self.assertIsInstance(json.loads(f.read_text(encoding="utf-8")), (dict, list))
             elif f.suffix == ".jsonl":
                 with self.subTest(file=f.name):
                     for line in f.read_text(encoding="utf-8").splitlines():
@@ -268,13 +276,13 @@ class Fictional(unittest.TestCase):
                 self.assertIn("FICTIONAL", (DEMO / name).read_text(encoding="utf-8"))
 
     def test_no_cyrillic_anywhere_in_the_demo(self):
-        for f in demo_files():
+        for f in demo_text_files():
             with self.subTest(file=f.relative_to(DEMO).as_posix()):
                 self.assertIsNone(CYRILLIC.search(f.read_text(encoding="utf-8")))
 
     def test_demo_has_no_real_contact_data(self):
         email = re.compile(r"[\w.+-]+@(?!example\.)[\w-]+\.[a-z]{2,}", re.I)
-        for f in demo_files():
+        for f in demo_text_files():
             with self.subTest(file=f.relative_to(DEMO).as_posix()):
                 self.assertIsNone(email.search(f.read_text(encoding="utf-8")))
 
