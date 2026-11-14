@@ -85,10 +85,28 @@ class Languages(unittest.TestCase):
                 self.assertRegex(p.read_text(encoding="utf-8"), CYRILLIC, "no Cyrillic left; remove it from the allowlist")
 
 
+MEDIA_LIMITS = {          # showcase media for the README; everything else stays under 1 MB
+    "docs/showcase/": 4_000_000,   # 720p example videos and thumbnails
+    "docs/assets/": 5_000_000,     # hero animation, diagrams, social preview
+}
+
+
+def size_limit(path):
+    for prefix, limit in MEDIA_LIMITS.items():
+        if path.startswith(prefix):
+            return limit
+    return MAX_BYTES
+
+
 class Size(unittest.TestCase):
-    def test_no_file_over_1_mb(self):
-        big = [f"{rel(p)} ({p.stat().st_size} bytes)" for p in all_files() if p.stat().st_size > MAX_BYTES]
+    def test_no_file_over_its_size_limit(self):
+        big = [f"{rel(p)} ({p.stat().st_size} bytes > {size_limit(rel(p))})" for p in all_files()
+               if p.stat().st_size > size_limit(rel(p))]
         self.assertEqual(big, [])
+
+    def test_showcase_media_total_stays_small(self):
+        total = sum(p.stat().st_size for p in all_files() if rel(p).startswith(tuple(MEDIA_LIMITS)))
+        self.assertLess(total, 25_000_000, "keep README media under 25 MB in total")
 
 
 class Secrets(unittest.TestCase):

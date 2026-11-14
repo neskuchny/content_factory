@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 780" width="1000" height="780" role="img" aria-labelledby="t d">
+  <title id="t">Content Factory architecture</title>
+  <desc id="d">A human owner answers one approval pack per week. Inside a frame enforced by the guard.py permissions hook, the orchestrator, producer, director, studio, reviewer, adapter and publisher work along the weekly stages; media-indexer, analyst and feedback work around the cycle; studio drives the engines (code and Higgsfield MCP); everything is exchanged through files in git. The locked layer can be changed by a human only.</desc>
+  <defs>
+    <style>
+      .h{font-family:Nunito,'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;font-weight:800;fill:#1D2026}
+      .m{font-family:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;font-weight:500;fill:#1D2026}
+      .mu{fill:#5E6670}
+      .pa{fill:#F2F3EF}
+      .c{text-anchor:middle}
+      .e{text-anchor:end}
+      .node{fill:#FBFBF8;stroke:#1D2026;stroke-width:1.6}
+      .ln{fill:none;stroke:#1D2026;stroke-width:1.6}
+      .chip{fill:#F2F3EF;stroke:#5E6670;stroke-width:1}
+    </style>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#DDE1E3" stroke-width="1"/>
+    </pattern>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#1D2026"/>
+    </marker>
+    <marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#D9480F"/>
+    </marker>
+  </defs>
+
+  <!-- own paper background, so the diagram reads the same in GitHub light and dark themes -->
+  <rect width="1000" height="780" rx="18" fill="#F2F3EF"/>
+  <rect width="1000" height="780" rx="18" fill="url(#grid)" opacity="0.6"/>
+
+  <!-- title row: logo mark "three frames on a strip" + wordmark set as text -->
+  <g transform="translate(44 30) scale(0.9)">
+    <g stroke="#1D2026" stroke-width="3" fill="none" stroke-linecap="round"><rect x="2" y="6" width="28" height="28" rx="6"/><rect x="46" y="6" width="28" height="28" rx="6"/><path d="M33 20h10M77 20h10"/></g>
+    <rect x="90" y="6" width="28" height="28" rx="6" fill="#D9480F"/>
+    <path d="M97 20.5l5 5 10-11" fill="none" stroke="#F2F3EF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text class="h" x="164" y="56" font-size="24">Content Factory</text>
+  <text class="m mu e" x="956" y="54" font-size="12.5">agents exchange files, not messages · one human gate</text>
+
+  <!-- human band -->
+  <rect class="node" x="44" y="86" width="240" height="70" rx="10"/>
+  <path d="M58 100h14l6 6v22h-20z" fill="none" stroke="#1D2026" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M72 100v6h6M62 114h12M62 120h12" fill="none" stroke="#1D2026" stroke-width="1.4"/>
+  <text class="h" x="90" y="111" font-size="15">Approval pack</text>
+  <text class="m mu" x="90" y="129" font-size="12">06-approval.md</text>
+  <text class="m mu" x="90" y="145" font-size="12">every unit · one message</text>
+
+  <path class="ln" d="M285 121H376" marker-end="url(#ar)"/>
+  <text class="m mu c" x="330" y="113" font-size="12">stage 6</text>
+
+  <rect x="380" y="80" width="240" height="82" rx="12" fill="#FBFBF8" stroke="#D9480F" stroke-width="2.6"/>
+  <rect x="396" y="101" width="28" height="28" rx="6" fill="#D9480F"/>
+  <path d="M403 115.5l5 5 10-11" fill="none" stroke="#F2F3EF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text class="h" x="436" y="113" font-size="18">Human / owner</text>
+  <text class="m mu" x="436" y="133" font-size="12">approves every unit</text>
+  <text class="m mu" x="436" y="149" font-size="12">edits the locked layer</text>
+
+  <!-- the human decision travels to the publisher (accent = a human decision) -->
+  <path d="M621 121H899V266" fill="none" stroke="#D9480F" stroke-width="2.6" stroke-linejoin="round" marker-end="url(#aa)"/>
+  <text class="m c" x="760" y="111" font-size="12.5">take A · not this: …</text>
+  <text class="m mu c" x="760" y="139" font-size="12">one line per unit</text>
+
+  <!-- orchestrator builds the pack -->
+  <path class="ln" d="M101 268V160" marker-end="url(#ar)"/>
+
+  <!-- guard frame -->
+  <rect x="24" y="186" width="952" height="552" rx="16" fill="none" stroke="#1D2026" stroke-width="1.6" stroke-dasharray="7 5"/>
+  <rect x="362" y="173" width="276" height="26" rx="13" fill="#1D2026"/>
+  <path d="M378 179.5l6-2.5 6 2.5v5c0 4-3 6.5-6 7.5-3-1-6-3.5-6-7.5z" fill="none" stroke="#F2F3EF" stroke-width="1.4" stroke-linejoin="round"/>
+  <text class="m pa" x="512" y="190.5" font-size="13" font-weight="600" text-anchor="middle">guard.py · PreToolUse hook</text>
+  <text class="m mu c" x="500" y="220" font-size="12.5">checks every Read · Write · Bash against config/permissions-matrix.yaml, per role</text>
+
+  <!-- review loop -->
+  <text class="m c" x="566" y="247" font-size="12">FAIL → fix · after 3 FAILs, ask a human</text>
+  <path class="ln" d="M614 270C614 252 519 252 519 266" marker-end="url(#ar)"/>
+
+  <!-- weekly pipeline -->
+  <g>
+    <rect class="node" x="44" y="270" width="114" height="72" rx="10"/>
+    <text class="m mu c" x="101" y="290" font-size="11.5">stage 1 · 6</text>
+    <text class="h c" x="101" y="312" font-size="15">orchestrator</text>
+    <text class="m c" x="101" y="331" font-size="12">plan · pack</text>
+
+    <rect class="node" x="177" y="270" width="114" height="72" rx="10"/>
+    <text class="m mu c" x="234" y="290" font-size="11.5">stage 1–3</text>
+    <text class="h c" x="234" y="312" font-size="15">producer</text>
+    <text class="m c" x="234" y="331" font-size="12">scripts</text>
+
+    <rect class="node" x="310" y="270" width="114" height="72" rx="10"/>
+    <text class="m mu c" x="367" y="290" font-size="11.5">stage 3.5</text>
+    <text class="h c" x="367" y="312" font-size="15">director</text>
+    <text class="m c" x="367" y="331" font-size="12">harness.md</text>
+
+    <rect class="node" x="443" y="270" width="114" height="72" rx="10"/>
+    <text class="m mu c" x="500" y="290" font-size="11.5">stage 4</text>
+    <text class="h c" x="500" y="312" font-size="15">studio</text>
+    <text class="m c" x="500" y="331" font-size="12">runs steps</text>
+
+    <rect class="node" x="576" y="270" width="114" height="72" rx="10"/>
+    <text class="m mu c" x="633" y="290" font-size="11.5">stage 4 · QC</text>
+    <text class="h c" x="633" y="312" font-size="15">reviewer</text>
+    <text class="m c" x="633" y="331" font-size="12">PASS / FAIL</text>
+
+    <rect class="node" x="709" y="270" width="114" height="72" rx="10"/>
+    <text class="m mu c" x="766" y="290" font-size="11.5">stage 5</text>
+    <text class="h c" x="766" y="312" font-size="15">adapter</text>
+    <text class="m c" x="766" y="331" font-size="12">per channel</text>
+
+    <rect class="node" x="842" y="270" width="114" height="72" rx="10"/>
+    <text class="m mu c" x="899" y="290" font-size="11.5">stage 7</text>
+    <text class="h c" x="899" y="312" font-size="15">publisher</text>
+    <text class="m c" x="899" y="331" font-size="12">kit or API</text>
+  </g>
+  <g class="ln" marker-end="url(#ar)">
+    <path d="M159 306H176"/><path d="M292 306H309"/><path d="M425 306H442"/>
+    <path d="M558 306H575"/><path d="M691 306H708"/><path d="M824 306H841"/>
+  </g>
+
+  <!-- around the cycle -->
+  <rect x="36" y="366" width="396" height="104" rx="12" fill="none" stroke="#5E6670" stroke-width="1.2" stroke-dasharray="4 4"/>
+  <text class="m mu" x="48" y="383" font-size="11.5">around the cycle</text>
+  <rect class="node" x="44" y="392" width="114" height="64" rx="10"/>
+  <text class="m mu c" x="101" y="410" font-size="11.5">stage 0</text>
+  <text class="h c" x="101" y="429" font-size="13.5">media-indexer</text>
+  <text class="m c" x="101" y="447" font-size="11.5">skeletons</text>
+  <rect class="node" x="177" y="392" width="114" height="64" rx="10"/>
+  <text class="m mu c" x="234" y="410" font-size="11.5">stage 0 · 8</text>
+  <text class="h c" x="234" y="429" font-size="14.5">analyst</text>
+  <text class="m c" x="234" y="447" font-size="11.5">trends · retro</text>
+  <rect class="node" x="310" y="392" width="114" height="64" rx="10"/>
+  <text class="m mu c" x="367" y="410" font-size="11.5">stage 8</text>
+  <text class="h c" x="367" y="429" font-size="14.5">feedback</text>
+  <text class="m c" x="367" y="447" font-size="11.5">memory · golden</text>
+
+  <!-- engines -->
+  <path class="ln" d="M500 344V364" marker-start="url(#ar)" marker-end="url(#ar)"/>
+  <rect class="node" x="443" y="366" width="252" height="124" rx="12"/>
+  <text class="m mu" x="455" y="383" font-size="11.5">engines</text>
+  <rect x="451" y="392" width="100" height="90" rx="8" fill="#F2F3EF" stroke="#1D2026" stroke-width="1.2"/>
+  <text class="h c" x="501" y="411" font-size="14.5">code</text>
+  <text class="m c" x="501" y="428" font-size="11">ffmpeg</text>
+  <text class="m c" x="501" y="442" font-size="11">HyperFrames</text>
+  <text class="m c" x="501" y="456" font-size="11">Remotion</text>
+  <text class="m c" x="501" y="470" font-size="11">three.js</text>
+  <rect x="557" y="392" width="130" height="90" rx="8" fill="#F2F3EF" stroke="#1D2026" stroke-width="1.2"/>
+  <text class="h c" x="622" y="411" font-size="14">Higgsfield MCP</text>
+  <text class="m c" x="622" y="428" font-size="11">images · video</text>
+  <text class="m c" x="622" y="442" font-size="11">voice · lipsync</text>
+  <text class="m mu c" x="622" y="463" font-size="11">paid · studio only</text>
+
+  <!-- outside world and scripts -->
+  <path class="ln" d="M899 344V364" marker-end="url(#ar)"/>
+  <rect x="709" y="366" width="247" height="56" rx="10" fill="#FBFBF8" stroke="#1D2026" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <text class="h c" x="832" y="389" font-size="14.5">Platforms</text>
+  <text class="m mu c" x="832" y="408" font-size="11.5">manual publish kit by default</text>
+  <path class="ln" d="M832 423V442" marker-end="url(#ar)"/>
+  <text class="m mu" x="842" y="437" font-size="11">metrics</text>
+  <rect class="node" x="709" y="444" width="247" height="56" rx="10"/>
+  <text class="h c" x="832" y="467" font-size="14.5">Scripts · no model</text>
+  <text class="m mu c" x="832" y="486" font-size="11.5">precheck · baseline · costs</text>
+
+  <!-- writes into the state layer -->
+  <g class="ln" marker-end="url(#ar)">
+    <path d="M101 457V544"/><path d="M234 457V544"/><path d="M367 457V544"/>
+    <path d="M569 491V544"/><path d="M832 501V544"/>
+  </g>
+
+  <!-- state layer -->
+  <rect class="node" x="44" y="546" width="912" height="84" rx="12"/>
+  <text class="h" x="60" y="571" font-size="15">State layer — files + git</text>
+  <text class="m mu e" x="940" y="570" font-size="12">every stage writes one file; any stage can be resumed</text>
+  <g class="m" font-size="12">
+    <rect class="chip" x="60" y="586" width="128" height="26" rx="6"/><text x="124" y="603.5" text-anchor="middle">weeks/&lt;W&gt;/00…08</text>
+    <rect class="chip" x="197" y="586" width="128" height="26" rx="6"/><text x="261" y="603.5" text-anchor="middle">requests/&lt;REQ&gt;/</text>
+    <rect class="chip" x="334" y="586" width="92" height="26" rx="6"/><text x="380" y="603.5" text-anchor="middle">harness.md</text>
+    <rect class="chip" x="435" y="586" width="85" height="26" rx="6"/><text x="477.5" y="603.5" text-anchor="middle">review.md</text>
+    <rect class="chip" x="529" y="586" width="114" height="26" rx="6"/><text x="586" y="603.5" text-anchor="middle">manifest.json</text>
+    <rect class="chip" x="652" y="586" width="106" height="26" rx="6"/><text x="705" y="603.5" text-anchor="middle">media-index/</text>
+    <rect class="chip" x="767" y="586" width="70" height="26" rx="6"/><text x="802" y="603.5" text-anchor="middle">memory/</text>
+    <rect class="chip" x="846" y="586" width="94" height="26" rx="6"/><text x="893" y="603.5" text-anchor="middle">analytics/</text>
+  </g>
+
+  <!-- locked layer -->
+  <rect x="44" y="650" width="912" height="70" rx="12" fill="#1D2026"/>
+  <rect x="62" y="672" width="18" height="14" rx="3" fill="none" stroke="#F2F3EF" stroke-width="1.6"/>
+  <path d="M65 672v-4a6 6 0 0 1 12 0v4" fill="none" stroke="#F2F3EF" stroke-width="1.6"/>
+  <text class="h pa" x="96" y="677" font-size="15">Locked layer — changed by a human only</text>
+  <text class="m pa e" x="940" y="677" font-size="12" opacity="0.85">agents propose → memory/proposals.md</text>
+  <text class="m pa" x="96" y="702" font-size="12" opacity="0.85">CLAUDE.md · agents · skills · flows · config/ · passport · product-base/ · permissions.yaml · consents.md</text>
+
+  <text class="m mu" x="44" y="763" font-size="12">orange = a human decision · graphite = agents, files, machines</text>
+  <text class="m mu e" x="956" y="763" font-size="12">content_factory · MIT</text>
+</svg>

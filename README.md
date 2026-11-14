@@ -1,5 +1,11 @@
 # Content Factory
 
+[![CI](https://github.com/neskuchny/content_factory/actions/workflows/ci.yml/badge.svg)](https://github.com/neskuchny/content_factory/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-1D2026)](LICENSE) [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-1D2026?logo=python&logoColor=white)](https://www.python.org/downloads/) [![Built with Claude Code](https://img.shields.io/badge/built%20with-Claude%20Code-1D2026?logo=claude&logoColor=white)](https://claude.com/claude-code)
+
+[![Five short videos made by the factory](docs/assets/hero.gif)](#see-it-in-action)
+
+<sub>Five videos the factory made: an AI-character clip, three code films and the demo client's example. [Details and costs below](#see-it-in-action).</sub>
+
 A content factory for social-media video, run by [Claude Code](https://claude.com/claude-code).
 Each week it turns a client's raw material and product knowledge into a plan, scripts, finished
 videos and per-platform adaptations, then asks a human to approve every unit before anything is
@@ -19,7 +25,45 @@ It is a harness, not an application:
 It is not a hosted service, a no-code tool, or an autoposter. By default it publishes nothing
 by itself.
 
+## See it in action
+
+Every video below was planned, produced and checked by the factory's agents. The first four are
+from the factory's own promo series (made in Russian, re-rendered here with English titles at no
+extra cost); the last one is the [demo client's end-to-end example](#a-complete-example-from-brief-to-approved-video).
+Titles, numbers and logos are always drawn by code, never generated. Click a cover to play.
+
+<table>
+<tr>
+<td align="center" width="20%"><a href="docs/showcase/ai-character-clip.mp4"><img src="docs/showcase/ai-character-clip.jpg" width="150" alt="AI character clip"></a></td>
+<td align="center" width="20%"><a href="docs/showcase/council-at-the-table.mp4"><img src="docs/showcase/council-at-the-table.jpg" width="150" alt="Council at the Table"></a></td>
+<td align="center" width="20%"><a href="docs/showcase/frost.mp4"><img src="docs/showcase/frost.jpg" width="150" alt="Frost"></a></td>
+<td align="center" width="20%"><a href="docs/showcase/hive.mp4"><img src="docs/showcase/hive.jpg" width="150" alt="Hive"></a></td>
+<td align="center" width="20%"><a href="docs/showcase/freshness-dial.mp4"><img src="docs/showcase/freshness-dial.jpg" width="150" alt="Freshness dial"></a></td>
+</tr>
+<tr>
+<td align="center"><b>AI character clip</b><br>18 s</td>
+<td align="center"><b>Council at the Table</b><br>30 s</td>
+<td align="center"><b>Frost</b><br>28 s</td>
+<td align="center"><b>Hive</b><br>28 s</td>
+<td align="center"><b>Freshness dial</b><br>18 s · demo client</td>
+</tr>
+</table>
+
+| Video | How it was made | Generation cost | Checks |
+|---|---|---|---|
+| AI character clip | A ready-made AI character preset, 3 key frames (GPT Image), 3 × 4 s clips on Kling 4.0, music by ElevenLabs Music; titles, stamps and the end card by code. The model turned the dress into trousers in the first clip, so that clip was rescued by code (slow-motion window, push-in) instead of paying for a re-run. | 36.9 credits ≈ $1.94 | QC: PASS with fixes · jury 7/9 |
+| Council at the Table | Code film, 2D paper theatre on Canvas ([`f18`](flows/f18-code-film.md)): every object arrives on a visible thread from a spool. | 0 | Stills and draft reviewed by QC |
+| Frost | Code film, 3D in three.js: a lamp thaws a circle in frosted glass, behind it a shop floor of AI staff. Rendered on CPU in 11.5 min. | 0 | Stills and draft reviewed by QC |
+| Hive | Code film, 3D in three.js: paper-lantern bees, a "stop / run" lever, a lock that only a human opens. Rendered on CPU in 20 min. | 0 | Stills and draft reviewed by QC |
+| Freshness dial | Code film, 2D, for the fictional demo roaster. Every on-screen claim is cited from the demo product base. | 0 | {{DEMO_QC}} |
+
+Credits are Higgsfield credits; the dollar figure uses the fixed rate in
+[`config/pricing.yaml`](config/pricing.yaml). Sound in all five is made by code. Videos are
+720p copies; the factory renders 1080×1920 masters.
+
 ## The weekly cycle
+
+![Architecture: agents, engines, files and the guard hook](docs/assets/architecture.svg)
 
 A week lives in `clients/<client>/weeks/<YYYY-Www>/`. A stage does not start until the previous
 one has its output. Full rules are in [`CLAUDE.md`](CLAUDE.md) section 3.
@@ -42,8 +86,80 @@ scenes and frames), and write the route first (`harness.md`, taken from or built
 [`flows/`](flows/README.md)). Static assets are checked before any video is generated; after
 three FAILs on a step the factory asks a human instead of retrying.
 
+<details>
+<summary>The weekly cycle as a diagram</summary>
+
+```mermaid
+flowchart TD
+    S0["0 · Raw material + source skeleton<br/>media-indexer, analyst"]
+    S1["1 · Week plan<br/>producer + orchestrator"]
+    S2["2 · Reshoot brief<br/>producer"]
+    S3["3 · Scripts and texts<br/>producer"]
+    S35["3.5 · Video flow: harness.md<br/>director"]
+    S4["4 · Production (hubs)<br/>studio ⇄ reviewer"]
+    S5["5 · Adaptation (spokes)<br/>adapter"]
+    S6["6 · Approval pack<br/>orchestrator"]
+    H{{"Human answers every unit<br/>take A / not this: …"}}
+    S7["7 · Publishing<br/>publisher: manual kit by default"]
+    S8["8 · Retro<br/>analyst + feedback"]
+
+    S0 -->|"gate: every new file has a skeleton"| S1
+    S1 -->|"gate: quotas met, capacity not exceeded"| S2
+    S2 -->|"gate: sent to the client as one message"| S3
+    S3 -->|"gate: facts checked against product-base/"| S35
+    S35 -->|"gate: flow chosen, budget within limit"| S4
+    S4 -->|"gate: every step verified, review.md = PASS"| S5
+    S5 -->|"gate: no new facts vs. the hub"| S6
+    S6 --> H
+    H -->|"approved, within permissions.yaml"| S7
+    H -.->|"not this: … → rework"| S4
+    S7 --> S8
+    S8 -.->|"memory/ shapes next week's plan"| S1
+
+    classDef stage fill:#F2F3EF,stroke:#1D2026,stroke-width:1.5px,color:#1D2026
+    classDef human fill:#F2F3EF,stroke:#D9480F,stroke-width:3px,color:#1D2026
+    class S0,S1,S2,S3,S35,S4,S5,S6,S7,S8 stage
+    class H human
+```
+
+</details>
+
 One-off requests ("here is a video and some pictures, make a reel") follow the same path from a
 folder `clients/<client>/requests/<REQ-id>/`.
+
+<details>
+<summary>One request, from brief to a manual publish kit</summary>
+
+```mermaid
+flowchart TD
+    B["requests/REQ-…/brief.md<br/>+ text, video, images"]
+    SK["Source skeleton<br/>media-indexer: transcript, scenes, frames"]
+    D["director writes harness.md<br/>a flow from flows/ or built from the step library"]
+    ST["studio runs the next step<br/>code or Higgsfield, estimate before paid steps"]
+    QC{"reviewer QC<br/>stills before video"}
+    ASK{{"3 FAILs on a step:<br/>ask a human"}}
+    J["Jury: creative second pass<br/>score 5–9, at most 3 fixes"]
+    AP["Approval pack<br/>06-approval.md"]
+    H{{"Human: take A / not this: …"}}
+    K["Manual publish kit<br/>files, caption, links, one action"]
+
+    B --> SK --> D --> ST --> QC
+    QC -->|"FAIL: fix and retry"| ST
+    QC -->|"PASS: next step"| ST
+    QC -->|"3rd FAIL"| ASK
+    ASK -.->|"human decides"| ST
+    QC -->|"PASS: final render"| J
+    J --> AP --> H
+    H -->|"approved"| K
+    H -.->|"not this: … → rework"| D
+
+    classDef step fill:#F2F3EF,stroke:#1D2026,stroke-width:1.5px,color:#1D2026
+    classDef human fill:#F2F3EF,stroke:#D9480F,stroke-width:3px,color:#1D2026
+    class B,SK,D,ST,QC,J,AP,K step
+    class ASK,H human
+```
+
+</details>
 
 ## Repository layout
 
