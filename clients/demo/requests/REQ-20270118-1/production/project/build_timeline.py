@@ -113,7 +113,7 @@ def main():
                        "exit": (w[1] < S["canvas"]["duration"] - 1e-9), "words": t["words"], "on_screen_s": round(dur, 3), "min_s": need})
     extras = [
         {"id": "HANDLE", "text": S["cta"]["handle"]["text"], "t0": win["HANDLE"][0], "t1": win["HANDLE"][1], "y": S["cta"]["handle"]["y"], "size": 44, "alpha": 1.0},
-        {"id": "DEMO", "text": S["cta"]["demo_mark"]["text"], "t0": win["DEMO"][0], "t1": win["DEMO"][1], "y": S["cta"]["demo_mark"]["y"], "size": 32, "alpha": S["cta"]["demo_mark"]["opacity"]},  # size 32 (was 26): review fix, the disclosure line is about 30 px tall
+        {"id": "DEMO", "text": S["cta"]["demo_mark"]["text"], "t0": win["DEMO"][0], "t1": win["DEMO"][1], "y": S["cta"]["demo_mark"]["y"] + 6, "size": 32, "alpha": S["cta"]["demo_mark"]["opacity"]},  # size 32 (was 26) and y + 6 (was 512): review fix, the disclosure line is about 30 px tall and keeps a gap to the handle
     ]
 
     # ------------------------------------------------------------------ beats

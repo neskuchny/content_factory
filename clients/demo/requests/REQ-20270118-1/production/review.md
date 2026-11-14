@@ -100,3 +100,18 @@ Remarks, not defects:
 - I looked at 36 frames (every 0.5 s) and several full-resolution crops; I did not step through all 540 frames. `data/checks_report.json` (studio's own 540-frame check) was not re-run.
 - `loudness.py` was not re-run; I measured with ebur128 and astats.
 - `permissions.yaml` was not edited; the 0-credit row is still due from the owner (`decisions.md`, 2027-01-18).
+
+## Re-check after fixes (studio, republished file; the verdict and the jury score above are unchanged)
+Applied: jury fix 1 (day counter), jury fix 2 (needle and numerals) and the reviewer note on the disclosure line. Details and numbers are in `log.md` -> "Fixes after review". Not applied: jury fix 3 (loop-back), by decision.
+
+| Item | What changed | Result |
+|---|---|---|
+| Jury 1 | copper "Day 1" ... "Day 5" under T3 (48 px, left edge x 60, baseline y 440), popping on the five hop clicks at 5.90, 6.39, 6.89, 7.39, 7.89 s, out with T3 at 8.15-8.40 | on frames 177-251 the text is always "Day n" with n = the last day the needle reached; 0.5 s per numeral; inside the safe zone; no object box overlaps it |
+| Jury 2 | needle ends at y 1226 (was 1305); numerals "0", "5", "28" at baseline 1284 (was 1258) | needle never touches a numeral on any of the 540 frames, smallest gap 24.6 px (shadow included); day curve, band and knob unchanged |
+| Reviewer note | "Fictional demo brand" font 26 -> 32 px (about 24 -> about 30 px tall), moved 6 px down | 9 px gap to the handle, inside the safe zone, still 60 % espresso on cream |
+| Copper | the counter is a new copper use (requested for this fix) | pixel scan of 270 frames: copper only in the band, title keywords and the counter |
+
+Check results: `project/checks.py` 540 frames, 28 of 28 PASS; `render.cjs --verify` determinism PASS, 0 external requests; `check.py --platform reels --content` 19 checks, 0 failed, 1 WARN (no subtitle track, as before);
+18.00 s, 1080x1920, 30 fps, -14.0 LUFS, -1.2 dBTP, 6.5 MB; stamp at 10.20 is still the loudest hit (-10.0 dBFS vs -11.6 and -11.2). Audio is the same file, no event moved. `look.py --safe reels`: nothing inside the Reels UI zones.
+Facts and AI label: no change (the counter repeats the "5 days" fact; 0 generations). Looked at: hop frames 182-255 (crops of title, counter and dial), the safe-zone contact sheet, the cover and the poster.
+Remark: the counter sits under the title, about 700 px above the needle, so the eye has to jump between them; the click and the numeral are on the same frame, which holds them together. If the owner wants it closer, the only free spot near the dial is the radio body to the right of the label.

@@ -6,6 +6,7 @@ greps (no Math.random / Date / performance.now) and the network log. Writes data
 Usage: python3 -I checks.py <dump.json> [<net.log>]
 """
 import json
+import math
 import os
 import re
 import sys
@@ -50,7 +51,7 @@ if net_path and os.path.exists(net_path):
     rec("network_0_external_requests", blocked == 0, {"blocked": blocked})
 
 # ---------------------------------------------------------------- texts
-allowed = {t["text"] for t in TX["titles"]} | set(TX["scene_labels"]) | {TX["cta"]["handle"], TX["cta"]["demo_mark"]}
+allowed = {t["text"] for t in TX["titles"]} | set(TX["scene_labels"]) | {TX["cta"]["handle"], TX["cta"]["demo_mark"]} | set(TX["counter"])
 title_text = {t["id"]: t["text"] for t in TX["titles"]}
 extra = {x for f in D for x in [d["text"] for d in f["drawn"]]} - allowed
 rec("texts_only_from_texts_json", not extra, sorted(extra))
@@ -92,9 +93,69 @@ rec("scene_labels_and_imprint_text", not bad, bad[:5])
 bad = [(t["id"], t["on_screen_s"], t["min_s"]) for t in T["titles"] if t["on_screen_s"] + 1e-9 < t["min_s"]]
 rec("reading_time", not bad, bad)
 
+def box_touch(a, b):
+    return a is not None and b is not None and a[0] <= b[2] and b[0] <= a[2] and a[1] <= b[3] and b[1] <= a[3]
+
+
+# ---------------------------------------------------------------- review fixes (re-check after fixes)
+# jury fix 1: day counter "Day n" on the five hops: present exactly from the first click to the end of T3's fade-out;
+# it shows the last day the needle has reached (it pops on the click, the needle arrives at the click: during a 0.12 s hop it still shows the previous day)
+K = T["counter"]
+c_first, c_end = K["items"][0]["t"], K["t1"]
+bad = []
+for f in D:
+    t = f["f"] / FPS
+    got = [d for d in f["drawn"] if d["id"] == "COUNTER"]
+    on = c_first <= t < c_end - 1e-9
+    if got and not on:
+        bad.append((f["f"], "counter outside its window"))
+    if on and not got and t < c_end - 0.2:
+        bad.append((f["f"], "counter missing"))
+    if got:
+        n = int(got[0]["text"].split()[-1])
+        if got[0]["text"] != "Day %d" % n or n != math.floor(f["s"]["day"] + 1e-6):
+            bad.append((f["f"], got[0]["text"], f["s"]["day"]))
+rec("counter_Day_n_is_the_last_day_reached_by_the_needle_first_hop_to_T3_fadeout", not bad, bad[:5])
+shown = sorted({d["text"] for f in D for d in f["drawn"] if d["id"] == "COUNTER"})
+rec("counter_shows_Day_1_to_Day_5_only", shown == ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"], shown)
+# every numeral is fully popped for at least 0.25 s before the next one (the last one: before the last 0.1 s of T3's fade-out) and on screen at least 0.4 s
+bad = []
+for i, it in enumerate(K["items"]):
+    t_end = K["items"][i + 1]["t"] if i + 1 < len(K["items"]) else c_end - 0.1
+    if t_end - it["t"] - K["pop_s"] < 0.25 or t_end - it["t"] < 0.4:
+        bad.append((it["text"], round(t_end - it["t"] - K["pop_s"], 3)))
+rec("each_counter_numeral_readable_0.25s_after_its_pop", not bad, bad)
+# pop moment = the click: the numeral starts on the frame of the click (+-1 frame) and the needle is on that day at that frame
+bad = []
+for it in K["items"]:
+    fr = int(round(it["t"] * FPS))
+    g = [d for d in D[fr]["drawn"] if d["id"] == "COUNTER"]
+    if not g or g[0]["text"] != it["text"] or abs(D[fr]["s"]["day"] - it["n"]) > 0.05:
+        bad.append((it["text"], fr))
+rec("counter_pops_on_the_click_frame_with_the_needle_on_that_day", not bad, bad)
+# jury fix 2: the needle never touches a dial numeral "0", "5", "28" (needle box padded by 14 px for its shadow)
+bad = []
+mingap = 1e9
+for f in D:
+    nb = f["boxes"].get("needle")
+    for L in ("L0", "L5", "L28"):
+        lb = f["boxes"].get(L)
+        if nb and lb:
+            gap = lb[1] - nb[3]           # vertical gap, needle bottom to numeral top
+            mingap = min(mingap, gap)
+            if box_touch([nb[0], nb[1], nb[2], nb[3] + 14], lb):
+                bad.append((f["f"], L))
+rec("needle_never_touches_numerals_0_5_28_(+14px_shadow_pad)", not bad and mingap >= 14, {"min_gap_px": round(mingap, 1), "frames": bad[:5]})
+# reviewer note: the "Fictional demo brand" line is about 30 px tall and still inside the safe zone and clear of the handle
+dh = [f["boxes"]["DEMO"][3] - f["boxes"]["DEMO"][1] for f in D if "DEMO" in f["boxes"]]
+hb = [(f["boxes"]["HANDLE"][3], f["boxes"]["DEMO"][1]) for f in D if "DEMO" in f["boxes"] and "HANDLE" in f["boxes"]]
+dsz = next(x["size"] for x in T["extras"] if x["id"] == "DEMO")
+# font size 26 -> 32 = x1.23: the reviewer's "about 24 px tall" becomes about 30 px; the ink box (no descenders in this line) was 21 px, now >= 25 px
+rec("demo_mark_font_32px_(was_26)_ink_box_ge_25px_clear_of_handle", dsz >= 32 and min(dh) >= 25 and all(d - h >= 6 for h, d in hb), {"font_px": dsz, "ink_box_px": [round(min(dh), 1), round(max(dh), 1)], "min_gap_to_handle_px": round(min(d - h for h, d in hb), 1)})
+
 # ---------------------------------------------------------------- safe zones (design units 1080x1920)
 SX0, SX1, SY0, SY1 = 60, 940, 250, 1520
-text_ids = re.compile(r"^(T\d|HANDLE|DEMO|L\d+|LABEL_DAYS|IMPRINT)$")
+text_ids = re.compile(r"^(T\d|HANDLE|DEMO|COUNTER|L\d+|LABEL_DAYS|IMPRINT)$")
 bad = []
 for f in D:
     for name, b in f["boxes"].items():
@@ -200,7 +261,7 @@ rec("pad_never_touches_label_before_306", not early, early[:5])
 obj = ("roaster", "tray", "bin", "scoop", "bag", "label", "lever", "pad", "needle")
 bad = []
 for f in D:
-    tb = [(n, b) for n, b in f["boxes"].items() if re.match(r"^(T\d|HANDLE|DEMO)$", n)]
+    tb = [(n, b) for n, b in f["boxes"].items() if re.match(r"^(T\d|HANDLE|DEMO|COUNTER)$", n)]
     for n, b in tb:
         for o in obj:
             ob = f["boxes"].get(o)

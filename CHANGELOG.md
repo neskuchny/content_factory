@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+- README showcase: an animated hero, a gallery of five videos made by the factory with how each was made,
+  generation cost and QC/jury results (`docs/showcase/`, 720p copies).
+- English versions of four videos from the factory's own promo series (AI character clip, "Council at the Table",
+  "Frost", "Hive"), re-rendered from code with English titles at no generation cost.
+- A complete end-to-end example for the demo client: `clients/demo/requests/REQ-20270118-1/` ("Freshness dial"
+  code film) from brief through harness, production code, QC + jury, fixes, Telegram adaptation and approval.
+- Architecture diagram (`docs/assets/architecture.svg`), two mermaid diagrams in the README, a dashboard screenshot,
+  a 1280×640 social preview image, badges, and maintainer notes for GitHub settings.
+
+### Changed
+- `docs/07-how-it-works.md`: the skill count is 21 (incl. the vendored ffmpeg-skill).
+- Tests: per-folder size limits for README media; demo checks skip binary files; JSON files may be arrays.
 
 ## [0.1.0] - TBD
 

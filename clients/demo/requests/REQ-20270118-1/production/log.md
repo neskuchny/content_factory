@@ -77,7 +77,34 @@ The grain and the cut edges are static by construction (not a function of the fr
 1 WARN (no subtitle track: the film has no speech and its words are burned in by code). Also made: a 720x1280 proxy (0.7 MB) and a 720 px poster (the cover).
 
 ## Where the big files are (not in the repo)
-Videos, frame caches, the full-size stills and `mix_raw.wav` live under the scratch folder
-`/tmp/claude-0/-home-user/6dfa4614-e576-52e2-b3cd-720823eab608/scratchpad/showcase/` (`en_videos/demo/`, `cache/REQ-20270118-1/`), outside the repo tree. In a real run `FILM_CACHE`
-defaults to `<repo>/.cache/REQ-20270118-1/` (git-ignored). Other deviations from the layout in `harness.md`: `draft_v1_sheet`, `cover` and the font test are JPG, not PNG;
-the draft and final mp4 are not kept in `draft/`, `final/`, `publish/`; the harness thumbs are `*_390.jpg`.
+Videos, frame caches, the full-size stills and `mix_raw.wav` were kept in a scratch folder outside the
+repo tree (set through `FILM_CACHE`). In a real run `FILM_CACHE` defaults to `<repo>/.cache/REQ-20270118-1/`
+(git-ignored). The 720p copy of the final is `docs/showcase/freshness-dial.mp4`. To keep the example small, the
+repo copy leaves out the draft sheet, the font test image and the 390 px thumbs; `stills/sheet.jpg` and
+`final/cover.jpg` are kept (recompressed). Other deviations from the layout in `harness.md`: images are JPG, not
+PNG; the draft and final mp4 are not kept in `draft/`, `final/`, `publish/`.
+
+## Fixes after review (studio, 0 credits, code only)
+Applied from `review.md`: jury fixes 1 and 2 and the reviewer note on the disclosure line. The optional loop-back (jury fix 3) is not done, as agreed. Timing of every event is unchanged,
+so `audio/mix_raw.wav` is the same file (md5 `1b19426fcb624eef1bc2ba2804444642`, 73 clicks = 31 + 5 + 23 + 14 as before) and no sound event was moved.
+
+| Fix | What changed | Where |
+|---|---|---|
+| Jury 1: day counter | Copper "Day 1" ... "Day 5" under T3, Inter 700 48 px, left edge x 60, baseline y 440 (clear of the objects, inside the safe zone). The word "Day " is fixed; the numeral pops on the click of each hop (5.90, 6.39, 6.89, 7.39, 7.89 s) with a 14 px rise and fade over 0.12 s on the brand curve, the previous numeral leaves upward. It goes out with T3 (fade 8.15-8.40). Each numeral is on screen 0.5 s (the last 0.41 s). Words come from the "5 days" fact: no new fact. Copper is used here by the owner's request for this fix; everywhere else it is still only the lit band and the title keywords. | `project/build_timeline.py` (derives `counter` from the hop clicks, adds `texts.json -> counter`), `scene/titles.mjs` (`drawCounter`), `scene/main.mjs` |
+| Jury 2: needle vs numerals | The needle is shortened: it now ends at y 1226 (was 1305) and the numerals "0", "5", "28" moved down from baseline 1258 to 1284. Smallest vertical gap needle to numeral: 24.6 px on every frame (needle box plus the shadow). Ticks, band, knob (12 deg per day) and the day curve are untouched. | `scene/radio.mjs` |
+| Reviewer: disclosure line | "Fictional demo brand" 26 px -> 32 px font (x1.23: the reviewer's about 24 px becomes about 30 px; ink box 21 -> 26 px, no descenders in the line), opacity 0.6 as before, moved 6 px down (y 518) to keep a 9 px gap to the handle. | `project/build_timeline.py`, `scene/titles.mjs` (uses `size` from the timeline) |
+| Cover | `final/cover.jpg` re-rendered (its dial crop showed the old needle over the numerals). | `render.cjs --cover` |
+
+Checks, re-run on the changed scene:
+- `project/checks.py` over all 540 frames: **28 checks, all PASS** (22 old ones unchanged + 6 new: counter text equals the last day the needle reached, counter shows exactly Day 1-5, each numeral
+  readable at least 0.25 s after its pop, counter pops on the click frame with the needle on that day, needle never touches a numeral (14 px shadow pad, min gap 24.6 px), disclosure line 32 px / ink 26 px / clear of the handle).
+  `COUNTER` was added to the safe-zone and to the object-overlap checks. `data/checks_report.json` is rewritten.
+- `render.cjs --verify`: frame 270 twice and frame 100 after 400 equal (also in a fresh browser), 60 frames forward and reverse: 0 differences. 0 external requests.
+- Pixel check on 270 frames (every 2nd): copper pixels only in the band, the title boxes and the counter box (0 frames with copper elsewhere; the needle, roaster and bag are never copper).
+- Old vs new publish file, frames 100, 300, 400: differences only in the dial area (y 1155-1304) and the disclosure line; everything else equal up to codec noise.
+
+Re-render (same chain as section 5): `render.cjs --frames --range 0:539 --w 1080 --h 1920 --workers 2` (38 s), `sequence.py` (540 frames), `audio.py --replace` with the same `mix_raw.wav`,
+`loudness.py -I -14 --tp -1`, `export.py --preset reels --max-mb 40`. `check.py --platform reels --content`: **19 checks, 0 failed, 1 WARN** (no subtitle track, explained as before).
+Measured: 18.00 s, 1080x1920, 30 fps, -14.0 LUFS, -1.2 dBTP, 6.5 MB. Hits (100 ms RMS after the event): stamp 10.20 -10.0 dBFS (still the loudest), settle 1.40 -11.6, pour 3.00 -11.2: same as in the review.
+Also refreshed: 720x1280 proxy (0.42 MB), 720 px poster (the new cover, 94 KB), `stills/sheet.jpg` and the three 390 px thumbs, `final/manifest.json` (counter track and `fixes_after_review`).
+Not done: the soft extra tick under the counter that the jury suggested (the sound was kept as it was, per the request); the loop-back.

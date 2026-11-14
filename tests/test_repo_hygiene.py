@@ -123,6 +123,20 @@ class Secrets(unittest.TestCase):
                     hits.append(f"{rel(p)}:{line}: {name}")
         self.assertEqual(hits, [])
 
+    def test_no_build_machine_paths_in_text_files(self):
+        # absolute paths from the machine that built a release (home dirs, temp/scratch folders) leak
+        # local layout and session ids; repository files should use relative paths or placeholders
+        rx = re.compile("/tmp/" + "claude-" + r"|/home/[a-z_][\w-]*/|/Users/[\w.-]+/|C:\\Users\\")
+        hits = []
+        for p in all_files():
+            t = text_of(p)
+            if t is None or rel(p).startswith("tests/"):  # tests use fake outside-repo paths on purpose
+                continue
+            m = rx.search(t)
+            if m:
+                hits.append(f"{rel(p)}:{t.count(chr(10), 0, m.start()) + 1}: {m.group(0)}")
+        self.assertEqual(hits, [])
+
     def test_no_secret_files_are_shipped(self):
         bad = []
         for p in all_files():

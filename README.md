@@ -228,6 +228,7 @@ the way through, so you can read what each agent leaves behind:
 | What happened, step by step | [`production/log.md`](clients/demo/requests/REQ-20270118-1/production/log.md) | studio |
 | QC verdict and the jury's score and fixes | [`production/review.md`](clients/demo/requests/REQ-20270118-1/production/review.md) | reviewer |
 | Spend | [`production/costs.md`](clients/demo/requests/REQ-20270118-1/production/costs.md) | studio |
+| Telegram adaptation (no new facts relative to the video) | [`adaptations/telegram_channel.md`](clients/demo/requests/REQ-20270118-1/adaptations/telegram_channel.md) | adapter |
 | Owner decisions at each gate | [`decisions.md`](clients/demo/requests/REQ-20270118-1/decisions.md) | owner |
 
 The result is [`docs/showcase/freshness-dial.mp4`](docs/showcase/freshness-dial.mp4). The owner is
@@ -314,6 +315,7 @@ This is an opinionated working harness extracted from real use, not a polished p
 - [`docs/05-video-formats-catalog.md`](docs/05-video-formats-catalog.md): video formats, techniques, models, tools
 - [`docs/01-research-content-factory.md`](docs/01-research-content-factory.md), [`docs/02-research-formats-and-tools.md`](docs/02-research-formats-and-tools.md), [`docs/10-external-tools-review.md`](docs/10-external-tools-review.md): research notes
 - [`flows/README.md`](flows/README.md): flow format, step library, catalogue
+- [`CHANGELOG.md`](CHANGELOG.md); for maintainers: [`docs/maintainers/repo-settings.md`](docs/maintainers/repo-settings.md) (GitHub settings, first release)
 - [`CONTRIBUTING.md`](CONTRIBUTING.md), [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md), [`SECURITY.md`](SECURITY.md), [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)
 
 ## License
