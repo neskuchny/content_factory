@@ -1,0 +1,52 @@
+# Factory ticks without your own server: GitHub Actions (free) collects metrics and decides
+# whether the model needs to be woken. If so, it calls a Claude Code cloud routine through its API trigger.
+# Repository secrets: CLAUDE_ROUTINE_URL (Fire URL of the "dispatcher" routine), CLAUDE_ROUTINE_TOKEN.
+#
+# The hourly schedule is DISABLED by default so that a fresh fork/public copy does not run on its own.
+# To enable it: (1) create the two secrets above (Settings -> Secrets and variables -> Actions),
+# (2) make sure the `factory` branch used below exists (it holds the client data the tick commits to),
+# (3) uncomment the `schedule:` block. Until then the workflow only runs manually (workflow_dispatch).
+name: factory-ticks
+on:
+  # schedule:
+  #   - cron: "17 * * * *"     # every hour at :17 (UTC)
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: factory }
+      - run: pip install pyyaml
+      - name: Collect metrics (no model)
+        run: |
+          for c in $(ls clients); do
+            [ -f "clients/$c/analytics/collect.sh" ] && bash "clients/$c/analytics/collect.sh" || true
+            [ -f "clients/$c/analytics/snapshots.jsonl" ] && python3 -I scripts/analytics/baseline.py --client "$c" || true
+          done
+      - name: Gatekeeper
+        id: pre
+        run: |
+          set +e
+          python3 -I scripts/ticks/precheck.py > wakes.json; code=$?
+          cat wakes.json
+          echo "agents=$(python3 -c 'import json;print(len([w for w in json.load(open("wakes.json")) if not w["agent"].startswith("script:")]))')" >> "$GITHUB_OUTPUT"
+      - name: Save metrics
+        run: |
+          git config user.name factory-bot && git config user.email factory-bot@users.noreply.github.com
+          git add clients && git commit -m "tick: metrics" && git push || true
+      - name: Wake the dispatcher (only if there is work)
+        if: steps.pre.outputs.agents != '0'
+        env:
+          URL: ${{ secrets.CLAUDE_ROUTINE_URL }}
+          TOKEN: ${{ secrets.CLAUDE_ROUTINE_TOKEN }}
+        run: |
+          body=$(python3 -c 'import json;print(json.dumps({"text": open("wakes.json").read()}))')
+          curl -fsS -X POST "$URL" \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "anthropic-beta: experimental-cc-routine-2026-04-01" \
+            -H "anthropic-version: 2023-06-01" \
+            -H "Content-Type: application/json" \
+            -d "$body"

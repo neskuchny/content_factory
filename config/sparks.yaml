@@ -1,0 +1,66 @@
+# Sparks for the idea dice (the idea-dice skill, scripts/qa/dice.py). Framework: changed by the owner.
+# Each category is a list of real things/phenomena. No brands, people, politics, or religion.
+objects:
+  - an old barometer
+  - kitchen scales
+  - a school globe
+  - photographic film
+  - a compass
+  - an hourglass
+  - a magnifying glass
+  - a metronome
+  - a thermos flask
+  - a watering can
+  - binoculars
+  - a telescope on a balcony
+professions:
+  - a weather forecaster
+  - a sommelier
+  - a tour guide
+  - an air traffic controller
+  - a competition referee
+  - a restorer
+  - a cartographer
+  - a fire inspector
+  - an orchestra conductor
+  - a lighthouse keeper
+nature:
+  - a sundial
+  - a north wind
+  - the first frost
+  - migratory birds
+  - an anthill
+  - the shadow of a cloud
+  - the polar night
+  - frost on a window
+  - a May thunderstorm
+  - a beehive
+inventions:
+  - the steam locomotive
+  - the instant camera
+  - the radio receiver
+  - the elevator
+  - the traffic light
+  - the GPS navigator
+  - the microscope
+  - the greenhouse (a history of orangeries)
+genres:
+  - a weather forecast
+  - a live report from the scene
+  - a safety briefing
+  - a cooking show
+  - sports commentary
+  - a nature documentary
+  - a detective story
+  - a museum tour
+  - a train station announcement
+  - a popular-science lecture
+everyday:
+  - the queue for seedlings in May
+  - the country house on the first warm day
+  - the neighbor's fence
+  - a family council
+  - looking for a phone charger
+  - a "before and after" renovation photo
+  - harvesting into buckets
+  - the first snow on the roof

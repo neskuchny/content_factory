@@ -1,0 +1,23 @@
+# FICTIONAL demo client.
+# Authority of the system. By default nothing external happens without a human.
+
+publish:          # auto — publisher posts through an approved tool; manual — manual publish kit
+  default: manual
+  # instagram: auto   # not enabled: no verified integration
+
+messages:
+  comments_reply: draft_only      # reply drafts; a human posts them
+  direct_messages: forbidden      # direct messages and mailings — only by a separate instruction
+  reviews_reply: draft_only       # map-service reviews
+
+spending:
+  generation_credits_week: 2      # owner decision 2027-01-04: up to 2 Higgsfield credits per week without asking
+  request_credits:                # one-off limits per request (owner decisions)
+    REQ-20270111-1: 0             # 2027-01-12: code-only, no paid generation
+  paid_placements: approval_each  # every paid placement needs its own budget approval
+
+escalate_to_human:
+  - prices, deadlines, contract terms
+  - non-standard questions and complaints
+  - unconfirmed technical promises
+  - using people on camera without a record in brand/consents.md

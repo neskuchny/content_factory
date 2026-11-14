@@ -1,0 +1,10 @@
+# role: hub — produces new content; spoke — only adapts finished content
+channels:
+  <channel_key>:
+    role: hub | spoke
+    url: ""
+    access: ""
+    purpose: ""
+    formats: {}        # for a hub
+    format_notes: ""   # for a spoke
+    rhythm: ""

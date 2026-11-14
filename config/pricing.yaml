@@ -1,0 +1,12 @@
+# Price of a generation credit — for converting each video's production cost into money.
+# Framework: changed only by the factory owner. Source: the owner's Higgsfield plan.
+higgsfield:
+  pack_credits: 2000
+  pack_usd: 105
+  credit_usd: 0.0526          # owner, 2026-11-02: "$1 = 19 credits" (1/19 ≈ 0.0526; the 2000-credit pack at $105 gives 0.0525)
+  credits_per_usd: 19
+  updated: 2026-11-02
+# Every video must write its spending to production/final/manifest.json:
+#   "credits": <number>          — total credits for the request (including discarded attempts)
+#   "credits_breakdown": {...}   — per step (optional)
+# Summary by request and the price in $ — scripts/analytics/costs.py → clients/<c>/analytics/costs.md

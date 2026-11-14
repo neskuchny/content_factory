@@ -1,0 +1,24 @@
+# FICTIONAL demo client — all names and facts are invented
+client: demo
+language: en   # BCP-47 code for client-facing text
+name: "Brewline Demo Roasters"
+niche: "Specialty coffee: small-batch roastery with a small retail shop"
+geography: "Example Harbor (fictional town)"
+products:
+  - "Whole-bean coffee in 250 g bags (3 blends: Harbor Blend, Lantern Light, Night Shift)"
+  - "Brewing accessories (filters, scales) sold in the shop"
+audience:
+  b2c_primary: "Home brewers who buy beans weekly and want better cups without buying expensive gear"
+  b2c_jobs:
+    - "Choose a roast I will enjoy"
+    - "Understand why my coffee tastes flat or bitter"
+    - "Find out when the shop is open and what is on the shelf"
+  b2b_secondary: "Small cafes and offices that buy beans in larger quantities (not a content priority)"
+target_action: "Visit the shop or order beans on the website"
+crm: ""
+site: "https://brewline.example"
+trust_triggers:
+  - "Roast date printed on every bag"
+  - "Roasted in small batches on site"
+adjacent_niches: ["home baking", "slow-living / cozy lifestyle", "specialty tea"]
+people: []   # no people on camera; see brand/consents.md

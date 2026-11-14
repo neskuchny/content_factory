@@ -1,0 +1,111 @@
+# Matrix of agent permissions on files. Applied by the hook scripts/guard/guard.py (PreToolUse).
+# This is the framework: changed only by the factory owner.
+#
+# Write-check logic (Edit/Write/NotebookEdit and Bash commands that write to files):
+#   1. path in protected     → forbidden for all agents (and for the main session in FACTORY_MODE=run)
+#   2. path in the agent's write → allowed
+#   3. otherwise             → forbidden
+# Reading: only what is in read_deny (common or per-agent) is forbidden.
+# The main session (no agent_type) when FACTORY_MODE != run is the owner: writes everything except secrets.
+
+protected:          # locked layer: human only
+  - CLAUDE.md
+  - .claude/**
+  - flows/**
+  - config/**
+  - scripts/**
+  - templates/**
+  - .mcp.json
+  - .github/**
+  - clients/*/passport.yaml
+  - clients/*/permissions.yaml
+  - clients/*/product-base/**
+  - clients/*/brand/consents.md
+  - clients/*/analytics/snapshots.jsonl   # raw metrics are written only by the collector scripts
+  - clients/*/analytics/baselines.json
+  - clients/*/analytics/scores.jsonl
+
+read_deny:          # for no agent
+  - "**/.env"
+  - "**/.env.*"
+  - "**/secrets/**"
+
+roles:
+  orchestrator:
+    write:
+      - clients/*/weeks/**
+      - clients/*/requests/**
+      - clients/*/quotas.yaml          # only after the human's "yes" (a rule in the prompt), recorded in the changelog
+      - clients/*/channels.yaml
+      - clients/*/memory/changelog.md
+      - clients/*/memory/proposals.md
+  producer:
+    write:
+      - clients/*/weeks/*/01-plan.md
+      - clients/*/weeks/*/02-shoot-brief.md
+      - clients/*/weeks/*/03-scripts/**
+      - clients/*/requests/*/brief.md
+      - clients/*/memory/proposals.md
+  director:
+    write:
+      - clients/*/weeks/*/04-production/*/harness.md
+      - clients/*/weeks/*/04-production/*/beats.md
+      - clients/*/weeks/*/04-production/*/shotlist.json
+      - clients/*/requests/*/harness.md
+      - clients/*/requests/*/beats.md
+      - clients/*/requests/*/shotlist.json
+      - clients/*/requests/*/card.md          # director's card (f18 "code film")
+      - clients/*/weeks/*/04-production/*/card.md
+      - clients/*/memory/proposals.md
+  studio:
+    write:
+      - clients/*/weeks/*/04-production/**
+      - clients/*/requests/*/production/**
+      - clients/*/weeks/*/costs.md
+      - clients/*/brand/templates/**
+      - clients/*/brand/sounds/**        # the client's sound library (with license passports)
+      - .cache/**
+  reviewer:
+    write:
+      - "**/review.md"
+  adapter:
+    write:
+      - clients/*/weeks/*/05-adaptations/**
+      - clients/*/requests/*/adaptations/**    # one-off requests
+  publisher:
+    write:
+      - clients/*/weeks/*/07-publications.md
+      - clients/*/weeks/*/07-kits/**
+      - clients/*/requests/*/publications.md   # one-off requests
+      - clients/*/requests/*/kits/**
+      - clients/*/analytics/registry.jsonl   # link between "our unit" and "the post on the platform"
+  media-indexer:
+    write:
+      - clients/*/media-index/**
+      - .cache/**
+  analyst:
+    write:
+      - clients/*/references/**
+      - clients/*/trends/**
+      - clients/*/weeks/*/00-inputs.md
+      - clients/*/weeks/*/08-retro.md
+      - clients/*/memory/targeting-map.md
+      - clients/*/memory/channel-state.md
+      - clients/*/memory/hooks-library.yaml
+      - clients/*/memory/platform-learnings.md
+  feedback:
+    write:
+      - clients/*/memory/**
+      - clients/*/brand/voice.md
+      - clients/*/brand/visual.md
+      - clients/*/brand/tokens.json
+      - clients/*/brand/golden/**
+      - clients/*/brand/cast/**            # cards of the series characters (by the owner's decision)
+      - clients/*/brand/voices.md
+      - clients/*/brand/references/**
+  onboarding:
+    write:
+      - clients/**
+    except:                            # even during onboarding
+      - clients/*/permissions.yaml
+      - clients/*/analytics/**

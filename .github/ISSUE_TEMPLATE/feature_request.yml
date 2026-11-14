@@ -1,0 +1,53 @@
+name: Feature request
+description: Suggest a new flow, skill, agent behaviour, script, or documentation improvement
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Changes to the locked framework layer (`CLAUDE.md`, agents, skills, `config/`) and to safety rules get the most scrutiny. Please explain the problem before the solution.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What are you trying to do that the factory does not support, or does badly?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: What would you add or change? Name the files, agents, flows or scripts if you know them.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - New flow
+        - New or changed skill
+        - Agent behaviour
+        - Script
+        - Guard hook / permissions
+        - Language / locale support
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: This does not weaken human approval, manual-by-default publishing, AI labelling, consent for real people, or "facts only from the product base"
+          required: true
+        - label: I am willing to help implement or test it
+          required: false

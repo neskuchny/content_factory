@@ -1,0 +1,27 @@
+# FICTIONAL demo client — handles and URLs are placeholders.
+# role: hub — produces new content; spoke — only adapts finished content
+channels:
+  instagram:
+    role: hub
+    url: "https://www.instagram.com/example_brewline"
+    access: "none (manual publishing)"
+    purpose: "Reach new local coffee drinkers; build trust in the roastery; drive visits to the shop"
+    formats:
+      reels: "15–30 s: roastery process, brewing tips, bean of the week (no people on camera)"
+      ai_content: "At most 1 per week, always labelled 'AI visualization' (e.g. concepts for the shop)"
+      carousels: "Brew guides and comparisons, 1080×1350"
+    rhythm: "2–3 reels per week"
+  telegram_channel:
+    role: spoke
+    handle: "@example_channel"
+    access: "none (manual publishing)"
+    purpose: "Regulars: new roasts, opening hours, short tips"
+    format_notes: "Short text + the reel's best 15 s clip or one picture; no new facts relative to the hub"
+    rhythm: "2–3 posts per week"
+  pinterest:
+    role: spoke
+    handle: "example_brewline_pins"
+    access: "none (manual publishing)"
+    purpose: "Evergreen discovery: brew guides and cozy coffee-corner ideas"
+    format_notes: "Vertical 2:3 pins from carousel slides and covers; link goes to the matching landing page with UTM"
+    rhythm: "2–3 pins per week"

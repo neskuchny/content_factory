@@ -1,0 +1,58 @@
+name: Bug report
+description: Something in the factory (an agent, skill, flow, script or doc) does not work as described
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. For security problems (guard bypass, secret leakage, prompt-injection paths) do **not** use this form: see SECURITY.md in the repository root and report privately through GitHub Security Advisories.
+
+        Do not paste API keys, tokens, or real client data. Reproduce with the fictional `clients/demo/` client if you can.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: The prompt you gave, the command you ran, the client and week or request involved.
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Agent or skill instructions
+        - Flow (flows/)
+        - Script (scripts/)
+        - Guard hook / permissions matrix
+        - Config or locales
+        - Templates or demo client
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Claude Code surface and version (CLI, desktop, web or cloud), OS, Python, Node and ffmpeg versions, run mode (manual, scheduled, ticks, server), and whether a generator such as Higgsfield was involved.
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Output, logs or files
+      description: Relevant output, `.cache/guard.log` lines, or file excerpts. Remove secrets and personal data first.
+      render: text
+    validations:
+      required: false

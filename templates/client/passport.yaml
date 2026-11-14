@@ -1,0 +1,16 @@
+client: <slug>
+language: en   # BCP-47 code for client-facing text (approval pack, shoot briefs, captions, scripts); e.g. en, de, ru
+name: ""
+niche: ""
+geography: ""
+products: []
+audience:
+  b2c_primary: ""
+  b2c_jobs: []
+  b2b_secondary: ""
+target_action: ""
+crm: ""
+site: ""
+trust_triggers: []
+adjacent_niches: []
+people: []

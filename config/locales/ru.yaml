@@ -1,0 +1,38 @@
+# Anti-jargon stoplist for Russian-language clients (`language: ru` in passport.yaml).
+# Used by scripts/qa/words_check.py (--lang ru). It flags "generated-sounding" phrasing and stock
+# clichés in a video script; it is a hint for the author/reviewer, never a hard block.
+#
+# Format: a list of rules. Each rule has
+#   pattern: a Python regular expression, applied to the LOWERCASED line (re.search);
+#   reason:  the message shown to the author. These stay in Russian because they are read by
+#            Russian-language authors.
+# Rules whose reason says "check product-base" flag claims and numbers that must come from the
+# client's product base (see the fact-check skill).
+language: ru
+rules:
+  - pattern: '\bне\s+[^.,!?;:]{1,40}?,\s*а\s+'
+    reason: "конструкция «не X, а Y» — частый маркер сгенерированного текста"
+  - pattern: '\bэто\s+не\s+просто\b'
+    reason: "«это не просто …» — штамп"
+  - pattern: '\bне\s+просто\s+\w+\s*[,—-]\s*а\b'
+    reason: "«не просто X, а Y» — штамп"
+  - pattern: '\b(адски|поистине|воистину|по-настоящему|невероятн\w*|потрясающ\w*|уникальн\w*)\b'
+    reason: "пустое усиление"
+  - pattern: '\b(в мире,?\s+где|давайте разберёмся|давайте разберемся|представьте себе|окунитесь|погрузитесь)\b'
+    reason: "заставка-штамп"
+  - pattern: '\b(откройте для себя|раскройте|секрет[ау]?\s+успеха|ключ\s+к\s+успеху|идеальн\w+\s+решени\w+)\b'
+    reason: "рекламный штамп"
+  - pattern: '\b(словно|будто бы|как бы)\b.{0,30}\b(шепч|танцу|поёт|поет)\w*'
+    reason: "олицетворение-штамп"
+  - pattern: '\bа\s+что,?\s+если\b'
+    reason: "«а что, если…» — штамп-хук"
+  - pattern: '\b(стоит отметить|важно отметить|следует отметить|нельзя не отметить)\b'
+    reason: "канцелярит"
+  - pattern: '\b(в заключение|подводя итог|таким образом)\b'
+    reason: "канцелярит"
+  - pattern: '\b(лучш\w+|номер\s+один|№\s*1|гарантир\w+|бесплатн\w+|скидк\w+|акци\w+)\b'
+    reason: "обещание/факт — проверь по product-base (fact-check)"
+  - pattern: '\d+\s*(₽|руб|р\.|%|лет|года?|дн\w*|м²|м2|см|мм)'
+    reason: "цифра с единицей — только из product-base"
+  - pattern: '(?<=\s)[—–](?=\s)'
+    reason: "тире в тексте на экране — проверь, не лучше ли точка"

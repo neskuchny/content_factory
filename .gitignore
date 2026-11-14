@@ -1,0 +1,41 @@
+.cache/
+node_modules/
+*.log
+.env
+.env.*
+# heavy renders are kept on the Drive; git holds only the project and previews
+clients/*/weeks/*/04-production/**/*.mp4
+clients/*/weeks/*/04-production/**/*.mov
+clients/*/weeks/*/07-kits/**/*.mp4
+# intermediate edit of requests: rebuilt by scripts from production/edit/project/
+clients/*/requests/*/production/edit/*.mp4
+clients/*/requests/*/production/edit/*.wav
+clients/*/requests/*/production/gen/flf_fit.mp4
+clients/*/requests/*/production/gen/flf_lock.mp4
+__pycache__/
+*.pyc
+clients/*/requests/*/production/shots/*.mp4
+clients/*/requests/*/production/layers/**/*.mp4
+clients/*/requests/*/production/edit/graded/*.mp4
+clients/*/requests/*/production/graded/*.mp4
+# master video files (final/*.mp4) go to Git LFS only after QC PASS: git add -f <file>
+clients/*/requests/*/production/final/*.mp4
+clients/*/requests/*/production/pilot/*.mp4
+clients/*/requests/*/production/shots916/*.mp4
+# temporary frames of HyperFrames renders
+clients/*/requests/*/production/work/**/captured-frames/
+clients/*/requests/*/production/work/**/*.mp4
+clients/*/requests/*/production/work/*.mp4
+clients/*/requests/*/production/work/overlay_*/
+clients/*/requests/*/production/work/proj_*/
+clients/*/requests/*/production/work/work-*/
+clients/*/requests/*/production/work/.*hf-transaction*
+# publish versions go to LFS after QC PASS (git add -f)
+clients/*/requests/*/production/publish/*.mp4
+clients/*/requests/*/production/work/m_*/
+# code film: baked textures and full-size stills are reproducible by scripts
+clients/*/requests/*/production/scene/tex/
+clients/*/requests/*/production/stills/S_*.png
+clients/*/requests/*/production/stills/M*.png
+clients/*/requests/*/production/scene/vendor/
+clients/*/requests/*/production/draft/*.mp4

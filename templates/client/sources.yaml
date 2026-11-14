@@ -1,0 +1,5 @@
+# Where to take source material from: yandex_disk / google_drive / telegram / local
+# (the yandex_disk key is read by scripts/ticks/precheck.py; leave unused lists empty)
+yandex_disk: []
+google_drive: []
+inbox: {}

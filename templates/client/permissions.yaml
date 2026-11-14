@@ -1,0 +1,20 @@
+# Authority of the system. By default nothing external happens without a human.
+
+publish:          # auto — publisher posts through an approved tool; manual — manual publish kit
+  default: manual
+  # instagram: auto   # enable one platform at a time after the integration is verified
+
+messages:
+  comments_reply: draft_only      # reply drafts; a human posts them
+  direct_messages: forbidden      # direct messages and mailings — only by a separate instruction
+  reviews_reply: draft_only       # map-service reviews
+
+spending:
+  generation_credits_week: 0      # TODO: weekly Higgsfield limit without approval
+  paid_placements: approval_each  # every paid placement needs its own budget approval
+
+escalate_to_human:
+  - prices, deadlines, contract terms
+  - non-standard questions and complaints
+  - unconfirmed technical promises
+  - using people on camera without a record in brand/consents.md
