@@ -1,0 +1,84 @@
+{
+ "bs1770_integrated_lufs": -14.0,
+ "momentary_max_lufs": -10.3,
+ "pre_gain_db": 4.05,
+ "max_gain_reduction_db": 7.18,
+ "limiter_ceiling_dbfs": -1.4,
+ "samples": 864000,
+ "duration_s": 18.0,
+ "peak_dbfs": -1.4,
+ "tail_rms_dbfs_17.8-18.0": -38.1,
+ "event_peaks_dbfs": {
+  "stamp_10.20": -1.4,
+  "settle_1.40": -1.4,
+  "pour_3.00": -1.4,
+  "door_clack_2.90": -6.06,
+  "hop_clicks_5.9-7.9": -1.82,
+  "sweep_clicks_0-1.35": -1.4,
+  "stream_3.2-3.8": -1.4,
+  "scoop_8.6-9.7": -1.8,
+  "glide_11.6-13.8": -1.96,
+  "paper_slides_15-15.8": -1.4,
+  "back_14.2-14.8": -1.4,
+  "drum_rumble_3.9-4.4": -1.42
+ },
+ "tone_vs_band_lit": {
+  "tone_frames_on": 215,
+  "band_lit_frames": 214,
+  "mismatched_frames": [
+   348
+  ],
+  "max_offset_frames": 1
+ },
+ "loudest_events_intended_dbfs": [
+  [
+   3.6,
+   "stamp"
+  ],
+  [
+   1.1,
+   "settle"
+  ],
+  [
+   -1.9,
+   "pour_accent"
+  ],
+  [
+   -3.7,
+   "click_34"
+  ],
+  [
+   -4.2,
+   "click_29"
+  ],
+  [
+   -4.3,
+   "click_25"
+  ],
+  [
+   -4.3,
+   "click_24"
+  ],
+  [
+   -4.3,
+   "click_07"
+  ]
+ ],
+ "loudest_order": [
+  "stamp",
+  "settle",
+  "pour_accent"
+ ],
+ "event_rms_dbfs_250ms_effects_only": {
+  "stamp_10.20": -15.0,
+  "settle_1.40": -17.4,
+  "pour_3.00": -15.5,
+  "sweep_0.50": -22.2,
+  "scoop_patter_9.40": -30.4,
+  "glide_12.0": -27.5,
+  "slide_15.1": -23.3,
+  "lid_5.15": -21.6
+ },
+ "tone_peak_dbfs_13-14s": -6.2,
+ "tone_rms_dbfs_13-14s": -14.9
+}

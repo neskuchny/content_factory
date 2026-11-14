@@ -1,0 +1,965 @@
+{
+"seed": 20270118,
+"sr": 48000,
+"duration_s": 18.0,
+"clicks": 73,
+"events": [
+{
+"id": "room",
+"t": 0.0,
+"frame": 0,
+"sound": "room tone (filtered noise, -45 dBFS RMS)",
+"layer": "room",
+"gain_db": -45.0
+},
+{
+"id": "click_00",
+"t": 0.0779,
+"frame": 2,
+"sound": "detent click, day 30",
+"layer": "click",
+"gain_db": -9.8,
+"group": "sweep",
+"day": 30
+},
+{
+"id": "click_01",
+"t": 0.1434,
+"frame": 4,
+"sound": "detent click, day 29",
+"layer": "click",
+"gain_db": -8.6,
+"group": "sweep",
+"day": 29
+},
+{
+"id": "click_02",
+"t": 0.2,
+"frame": 6,
+"sound": "detent click, day 28",
+"layer": "click",
+"gain_db": -8.4,
+"group": "sweep",
+"day": 28
+},
+{
+"id": "tone_0.20",
+"t": 0.2,
+"frame": 6,
+"sound": "warm tone D4+A4 (sine partials), attack 80 ms; on while band_lit",
+"layer": "tone",
+"gain_db": -9.5,
+"t_on": 0.2,
+"t_off": 0.95,
+"frame_on": 6,
+"frame_off": 28
+},
+{
+"id": "click_03",
+"t": 0.2472,
+"frame": 7,
+"sound": "detent click, day 27",
+"layer": "click",
+"gain_db": -10.2,
+"group": "sweep",
+"day": 27
+},
+{
+"id": "click_04",
+"t": 0.2869,
+"frame": 9,
+"sound": "detent click, day 26",
+"layer": "click",
+"gain_db": -8.8,
+"group": "sweep",
+"day": 26
+},
+{
+"id": "click_05",
+"t": 0.3226,
+"frame": 10,
+"sound": "detent click, day 25",
+"layer": "click",
+"gain_db": -9.6,
+"group": "sweep",
+"day": 25
+},
+{
+"id": "click_06",
+"t": 0.3555,
+"frame": 11,
+"sound": "detent click, day 24",
+"layer": "click",
+"gain_db": -10.0,
+"group": "sweep",
+"day": 24
+},
+{
+"id": "click_07",
+"t": 0.3865,
+"frame": 12,
+"sound": "detent click, day 23",
+"layer": "click",
+"gain_db": -8.4,
+"group": "sweep",
+"day": 23
+},
+{
+"id": "click_08",
+"t": 0.4161,
+"frame": 12,
+"sound": "detent click, day 22",
+"layer": "click",
+"gain_db": -9.6,
+"group": "sweep",
+"day": 22
+},
+{
+"id": "click_09",
+"t": 0.4446,
+"frame": 13,
+"sound": "detent click, day 21",
+"layer": "click",
+"gain_db": -10.1,
+"group": "sweep",
+"day": 21
+},
+{
+"id": "click_10",
+"t": 0.4725,
+"frame": 14,
+"sound": "detent click, day 20",
+"layer": "click",
+"gain_db": -10.7,
+"group": "sweep",
+"day": 20
+},
+{
+"id": "click_11",
+"t": 0.4998,
+"frame": 15,
+"sound": "detent click, day 19",
+"layer": "click",
+"gain_db": -9.3,
+"group": "sweep",
+"day": 19
+},
+{
+"id": "click_12",
+"t": 0.5268,
+"frame": 16,
+"sound": "detent click, day 18",
+"layer": "click",
+"gain_db": -9.1,
+"group": "sweep",
+"day": 18
+},
+{
+"id": "click_13",
+"t": 0.5536,
+"frame": 17,
+"sound": "detent click, day 17",
+"layer": "click",
+"gain_db": -9.0,
+"group": "sweep",
+"day": 17
+},
+{
+"id": "click_14",
+"t": 0.5804,
+"frame": 17,
+"sound": "detent click, day 16",
+"layer": "click",
+"gain_db": -9.4,
+"group": "sweep",
+"day": 16
+},
+{
+"id": "click_15",
+"t": 0.6072,
+"frame": 18,
+"sound": "detent click, day 15",
+"layer": "click",
+"gain_db": -9.3,
+"group": "sweep",
+"day": 15
+},
+{
+"id": "click_16",
+"t": 0.6344,
+"frame": 19,
+"sound": "detent click, day 14",
+"layer": "click",
+"gain_db": -8.6,
+"group": "sweep",
+"day": 14
+},
+{
+"id": "click_17",
+"t": 0.662,
+"frame": 20,
+"sound": "detent click, day 13",
+"layer": "click",
+"gain_db": -10.5,
+"group": "sweep",
+"day": 13
+},
+{
+"id": "click_18",
+"t": 0.6902,
+"frame": 21,
+"sound": "detent click, day 12",
+"layer": "click",
+"gain_db": -8.9,
+"group": "sweep",
+"day": 12
+},
+{
+"id": "click_19",
+"t": 0.7192,
+"frame": 22,
+"sound": "detent click, day 11",
+"layer": "click",
+"gain_db": -10.4,
+"group": "sweep",
+"day": 11
+},
+{
+"id": "click_20",
+"t": 0.7495,
+"frame": 22,
+"sound": "detent click, day 10",
+"layer": "click",
+"gain_db": -10.0,
+"group": "sweep",
+"day": 10
+},
+{
+"id": "click_21",
+"t": 0.7814,
+"frame": 23,
+"sound": "detent click, day 9",
+"layer": "click",
+"gain_db": -8.5,
+"group": "sweep",
+"day": 9
+},
+{
+"id": "click_22",
+"t": 0.8156,
+"frame": 24,
+"sound": "detent click, day 8",
+"layer": "click",
+"gain_db": -9.7,
+"group": "sweep",
+"day": 8
+},
+{
+"id": "click_23",
+"t": 0.8531,
+"frame": 26,
+"sound": "detent click, day 7",
+"layer": "click",
+"gain_db": -8.8,
+"group": "sweep",
+"day": 7
+},
+{
+"id": "click_24",
+"t": 0.8961,
+"frame": 27,
+"sound": "detent click, day 6",
+"layer": "click",
+"gain_db": -8.4,
+"group": "sweep",
+"day": 6
+},
+{
+"id": "click_25",
+"t": 0.95,
+"frame": 28,
+"sound": "detent click, day 5",
+"layer": "click",
+"gain_db": -8.4,
+"group": "sweep",
+"day": 5
+},
+{
+"id": "click_26",
+"t": 1.0157,
+"frame": 30,
+"sound": "detent click, day 4",
+"layer": "click",
+"gain_db": -9.0,
+"group": "sweep",
+"day": 4
+},
+{
+"id": "click_27",
+"t": 1.0868,
+"frame": 33,
+"sound": "detent click, day 3",
+"layer": "click",
+"gain_db": -9.9,
+"group": "sweep",
+"day": 3
+},
+{
+"id": "click_28",
+"t": 1.1663,
+"frame": 35,
+"sound": "detent click, day 2",
+"layer": "click",
+"gain_db": -8.7,
+"group": "sweep",
+"day": 2
+},
+{
+"id": "click_29",
+"t": 1.2615,
+"frame": 38,
+"sound": "detent click, day 1",
+"layer": "click",
+"gain_db": -8.3,
+"group": "sweep",
+"day": 1
+},
+{
+"id": "settle",
+"t": 1.4,
+"frame": 42,
+"sound": "needle settle tap (knock 165->95 Hz + tick)",
+"layer": "click",
+"gain_db": -3.0,
+"day": 0
+},
+{
+"id": "drum_rumble",
+"t": 2.6,
+"frame": 78,
+"sound": "drum rumble 55-130 Hz noise, modulated by the spokes",
+"layer": "mech",
+"gain_db": -10.5,
+"t_end": 4.4
+},
+{
+"id": "door_open",
+"t": 2.9,
+"frame": 87,
+"sound": "door clack",
+"layer": "mech",
+"gain_db": -15.0
+},
+{
+"id": "pour_accent",
+"t": 3.0,
+"frame": 90,
+"sound": "first rush through the open door (band noise 350-1500 Hz)",
+"layer": "beans",
+"gain_db": -6.0
+},
+{
+"id": "pour_stream",
+"t": 3.0,
+"frame": 90,
+"sound": "one grain tick per bean at the door and at the tray, rattle on the chute",
+"layer": "beans",
+"gain_db": -12.0,
+"t_end": 4.347
+},
+{
+"id": "stir_scrape",
+"t": 3.8,
+"frame": 114,
+"sound": "soft scrape of the stir arm, level follows its speed",
+"layer": "mech",
+"gain_db": -16.0,
+"t_end": 5.1
+},
+{
+"id": "door_close",
+"t": 4.4,
+"frame": 132,
+"sound": "door clack (softer)",
+"layer": "mech",
+"gain_db": -17.0
+},
+{
+"id": "lid_up_1",
+"t": 5.15,
+"frame": 154,
+"sound": "wooden lid tap",
+"layer": "mech",
+"gain_db": -11.0
+},
+{
+"id": "tray_tip_pour",
+"t": 5.34,
+"frame": 160,
+"sound": "ticks as beans slide off the tray, dull thuds into the bin",
+"layer": "beans",
+"gain_db": -13.0,
+"t_end": 5.78
+},
+{
+"id": "lid_down_1",
+"t": 5.85,
+"frame": 176,
+"sound": "wooden lid tap (closing)",
+"layer": "mech",
+"gain_db": -13.0
+},
+{
+"id": "click_31",
+"t": 5.8899,
+"frame": 177,
+"sound": "detent click, day 1",
+"layer": "click",
+"gain_db": -10.0,
+"group": "hop",
+"day": 1
+},
+{
+"id": "click_32",
+"t": 6.3899,
+"frame": 192,
+"sound": "detent click, day 2",
+"layer": "click",
+"gain_db": -8.9,
+"group": "hop",
+"day": 2
+},
+{
+"id": "click_33",
+"t": 6.8899,
+"frame": 207,
+"sound": "detent click, day 3",
+"layer": "click",
+"gain_db": -8.7,
+"group": "hop",
+"day": 3
+},
+{
+"id": "click_34",
+"t": 7.3899,
+"frame": 222,
+"sound": "detent click, day 4",
+"layer": "click",
+"gain_db": -7.8,
+"group": "hop",
+"day": 4
+},
+{
+"id": "click_35",
+"t": 7.8899,
+"frame": 237,
+"sound": "detent click, day 5",
+"layer": "click",
+"gain_db": -10.0,
+"group": "hop",
+"day": 5
+},
+{
+"id": "lid_up_2",
+"t": 8.6,
+"frame": 258,
+"sound": "wooden lid tap",
+"layer": "mech",
+"gain_db": -11.0
+},
+{
+"id": "scoop_dig_1",
+"t": 8.71,
+"frame": 261,
+"sound": "scoop digs in the beans (grainy scrape)",
+"layer": "beans",
+"gain_db": -13.0
+},
+{
+"id": "patter_1",
+"t": 8.92,
+"frame": 268,
+"sound": "beans patter on the paper bag (12 grains)",
+"layer": "beans",
+"gain_db": -14.0,
+"t_end": 9.24
+},
+{
+"id": "scoop_dig_2",
+"t": 9.19,
+"frame": 276,
+"sound": "scoop digs in the beans (grainy scrape)",
+"layer": "beans",
+"gain_db": -13.0
+},
+{
+"id": "patter_2",
+"t": 9.4,
+"frame": 282,
+"sound": "beans patter on the paper bag (12 grains)",
+"layer": "beans",
+"gain_db": -14.0,
+"t_end": 9.72
+},
+{
+"id": "lid_down_2",
+"t": 9.7,
+"frame": 291,
+"sound": "wooden lid tap (closing)",
+"layer": "mech",
+"gain_db": -13.0
+},
+{
+"id": "paper_crinkle",
+"t": 9.85,
+"frame": 296,
+"sound": "paper crinkle as the bag top folds",
+"layer": "mech",
+"gain_db": -13.0,
+"t_end": 10.0
+},
+{
+"id": "stamp",
+"t": 10.2,
+"frame": 306,
+"sound": "STAMP THUNK: body 150->78 Hz + sub 46 Hz + paper slap",
+"layer": "hit",
+"gain_db": -0.5
+},
+{
+"id": "lever_spring",
+"t": 10.3,
+"frame": 309,
+"sound": "lever spring",
+"layer": "mech",
+"gain_db": -18.0
+},
+{
+"id": "tone_11.60",
+"t": 11.6003,
+"frame": 348,
+"sound": "warm tone D4+A4 (sine partials), attack 80 ms; on while band_lit",
+"layer": "tone",
+"gain_db": -9.5,
+"t_on": 11.6003,
+"t_off": 18.0,
+"frame_on": 348,
+"frame_off": 540
+},
+{
+"id": "click_36",
+"t": 11.8767,
+"frame": 356,
+"sound": "detent click, day 6",
+"layer": "click",
+"gain_db": -11.5,
+"group": "glide",
+"day": 6
+},
+{
+"id": "click_37",
+"t": 11.9995,
+"frame": 360,
+"sound": "detent click, day 7",
+"layer": "click",
+"gain_db": -11.0,
+"group": "glide",
+"day": 7
+},
+{
+"id": "click_38",
+"t": 12.0978,
+"frame": 363,
+"sound": "detent click, day 8",
+"layer": "click",
+"gain_db": -10.6,
+"group": "glide",
+"day": 8
+},
+{
+"id": "click_39",
+"t": 12.1839,
+"frame": 366,
+"sound": "detent click, day 9",
+"layer": "click",
+"gain_db": -11.5,
+"group": "glide",
+"day": 9
+},
+{
+"id": "click_40",
+"t": 12.2624,
+"frame": 368,
+"sound": "detent click, day 10",
+"layer": "click",
+"gain_db": -11.7,
+"group": "glide",
+"day": 10
+},
+{
+"id": "click_41",
+"t": 12.336,
+"frame": 370,
+"sound": "detent click, day 11",
+"layer": "click",
+"gain_db": -10.0,
+"group": "glide",
+"day": 11
+},
+{
+"id": "click_42",
+"t": 12.4061,
+"frame": 372,
+"sound": "detent click, day 12",
+"layer": "click",
+"gain_db": -10.6,
+"group": "glide",
+"day": 12
+},
+{
+"id": "click_43",
+"t": 12.4736,
+"frame": 374,
+"sound": "detent click, day 13",
+"layer": "click",
+"gain_db": -10.4,
+"group": "glide",
+"day": 13
+},
+{
+"id": "click_44",
+"t": 12.5394,
+"frame": 376,
+"sound": "detent click, day 14",
+"layer": "click",
+"gain_db": -11.5,
+"group": "glide",
+"day": 14
+},
+{
+"id": "click_45",
+"t": 12.6041,
+"frame": 378,
+"sound": "detent click, day 15",
+"layer": "click",
+"gain_db": -11.9,
+"group": "glide",
+"day": 15
+},
+{
+"id": "click_46",
+"t": 12.6681,
+"frame": 380,
+"sound": "detent click, day 16",
+"layer": "click",
+"gain_db": -12.1,
+"group": "glide",
+"day": 16
+},
+{
+"id": "click_47",
+"t": 12.7319,
+"frame": 382,
+"sound": "detent click, day 17",
+"layer": "click",
+"gain_db": -10.0,
+"group": "glide",
+"day": 17
+},
+{
+"id": "click_48",
+"t": 12.7959,
+"frame": 384,
+"sound": "detent click, day 18",
+"layer": "click",
+"gain_db": -10.0,
+"group": "glide",
+"day": 18
+},
+{
+"id": "click_49",
+"t": 12.8606,
+"frame": 386,
+"sound": "detent click, day 19",
+"layer": "click",
+"gain_db": -11.5,
+"group": "glide",
+"day": 19
+},
+{
+"id": "click_50",
+"t": 12.9264,
+"frame": 388,
+"sound": "detent click, day 20",
+"layer": "click",
+"gain_db": -10.8,
+"group": "glide",
+"day": 20
+},
+{
+"id": "click_51",
+"t": 12.9939,
+"frame": 390,
+"sound": "detent click, day 21",
+"layer": "click",
+"gain_db": -10.7,
+"group": "glide",
+"day": 21
+},
+{
+"id": "click_52",
+"t": 13.064,
+"frame": 392,
+"sound": "detent click, day 22",
+"layer": "click",
+"gain_db": -11.0,
+"group": "glide",
+"day": 22
+},
+{
+"id": "click_53",
+"t": 13.1376,
+"frame": 394,
+"sound": "detent click, day 23",
+"layer": "click",
+"gain_db": -9.9,
+"group": "glide",
+"day": 23
+},
+{
+"id": "click_54",
+"t": 13.2161,
+"frame": 396,
+"sound": "detent click, day 24",
+"layer": "click",
+"gain_db": -10.7,
+"group": "glide",
+"day": 24
+},
+{
+"id": "click_55",
+"t": 13.3022,
+"frame": 399,
+"sound": "detent click, day 25",
+"layer": "click",
+"gain_db": -11.8,
+"group": "glide",
+"day": 25
+},
+{
+"id": "click_56",
+"t": 13.4005,
+"frame": 402,
+"sound": "detent click, day 26",
+"layer": "click",
+"gain_db": -10.2,
+"group": "glide",
+"day": 26
+},
+{
+"id": "click_57",
+"t": 13.5233,
+"frame": 406,
+"sound": "detent click, day 27",
+"layer": "click",
+"gain_db": -12.1,
+"group": "glide",
+"day": 27
+},
+{
+"id": "click_58",
+"t": 13.7623,
+"frame": 413,
+"sound": "detent click, day 28",
+"layer": "click",
+"gain_db": -10.9,
+"group": "glide",
+"day": 28
+},
+{
+"id": "click_59",
+"t": 14.2981,
+"frame": 429,
+"sound": "detent click, day 27",
+"layer": "click",
+"gain_db": -11.1,
+"group": "back",
+"day": 27
+},
+{
+"id": "click_60",
+"t": 14.3427,
+"frame": 430,
+"sound": "detent click, day 26",
+"layer": "click",
+"gain_db": -10.1,
+"group": "back",
+"day": 26
+},
+{
+"id": "click_61",
+"t": 14.3792,
+"frame": 431,
+"sound": "detent click, day 25",
+"layer": "click",
+"gain_db": -10.7,
+"group": "back",
+"day": 25
+},
+{
+"id": "click_62",
+"t": 14.4117,
+"frame": 432,
+"sound": "detent click, day 24",
+"layer": "click",
+"gain_db": -9.6,
+"group": "back",
+"day": 24
+},
+{
+"id": "click_63",
+"t": 14.4421,
+"frame": 433,
+"sound": "detent click, day 23",
+"layer": "click",
+"gain_db": -9.3,
+"group": "back",
+"day": 23
+},
+{
+"id": "click_64",
+"t": 14.4713,
+"frame": 434,
+"sound": "detent click, day 22",
+"layer": "click",
+"gain_db": -10.5,
+"group": "back",
+"day": 22
+},
+{
+"id": "click_65",
+"t": 14.5,
+"frame": 435,
+"sound": "detent click, day 21",
+"layer": "click",
+"gain_db": -10.3,
+"group": "back",
+"day": 21
+},
+{
+"id": "click_66",
+"t": 14.5287,
+"frame": 436,
+"sound": "detent click, day 20",
+"layer": "click",
+"gain_db": -11.6,
+"group": "back",
+"day": 20
+},
+{
+"id": "click_67",
+"t": 14.5579,
+"frame": 437,
+"sound": "detent click, day 19",
+"layer": "click",
+"gain_db": -11.6,
+"group": "back",
+"day": 19
+},
+{
+"id": "click_68",
+"t": 14.5883,
+"frame": 438,
+"sound": "detent click, day 18",
+"layer": "click",
+"gain_db": -10.8,
+"group": "back",
+"day": 18
+},
+{
+"id": "click_69",
+"t": 14.6208,
+"frame": 439,
+"sound": "detent click, day 17",
+"layer": "click",
+"gain_db": -11.4,
+"group": "back",
+"day": 17
+},
+{
+"id": "click_70",
+"t": 14.6573,
+"frame": 440,
+"sound": "detent click, day 16",
+"layer": "click",
+"gain_db": -9.4,
+"group": "back",
+"day": 16
+},
+{
+"id": "click_71",
+"t": 14.7019,
+"frame": 441,
+"sound": "detent click, day 15",
+"layer": "click",
+"gain_db": -11.6,
+"group": "back",
+"day": 15
+},
+{
+"id": "click_72",
+"t": 14.7868,
+"frame": 444,
+"sound": "detent click, day 14",
+"layer": "click",
+"gain_db": -10.2,
+"group": "back",
+"day": 14
+},
+{
+"id": "paper_slide_roaster",
+"t": 15.0,
+"frame": 450,
+"sound": "paper slides out (scuff, level follows speed)",
+"layer": "mech",
+"gain_db": -15.0,
+"t_end": 15.44
+},
+{
+"id": "paper_slide_lever",
+"t": 15.0,
+"frame": 450,
+"sound": "paper slides out (scuff, level follows speed)",
+"layer": "mech",
+"gain_db": -15.0,
+"t_end": 15.44
+},
+{
+"id": "paper_slide_bag",
+"t": 15.0,
+"frame": 450,
+"sound": "the bag comes forward (scuff)",
+"layer": "mech",
+"gain_db": -14.0,
+"t_end": 15.8
+},
+{
+"id": "paper_slide_tray",
+"t": 15.08,
+"frame": 452,
+"sound": "paper slides out (scuff, level follows speed)",
+"layer": "mech",
+"gain_db": -15.0,
+"t_end": 15.52
+},
+{
+"id": "paper_slide_bin",
+"t": 15.16,
+"frame": 455,
+"sound": "paper slides out (scuff, level follows speed)",
+"layer": "mech",
+"gain_db": -15.0,
+"t_end": 15.6
+}
+]
+}
