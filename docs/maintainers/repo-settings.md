@@ -29,7 +29,14 @@ Settings → General → **Social preview** → *Edit* → *Upload an image…* 
 recommends 1280 × 640). The source is `docs/assets/src/social-preview.html`; re-rendering it needs
 the two font files named in its header comment, which are not in the repository.
 
-## 3. Features (Settings → General → Features)
+## 3. Template repository (Settings → General)
+
+- Tick **Template repository**. People then get a **Use this template** button and start their own
+  private copy without forking (a fork of a public repository is public, and their copy will hold
+  client data). The README's "Start here" section and the `setup` skill describe both ways: a
+  template copy, or a clone pushed to their own private repository (easier updates).
+
+## 4. Features (Settings → General → Features)
 
 - **Issues:** on.
 - **Discussions:** on. Suggested categories:
@@ -40,7 +47,7 @@ the two font files named in its header comment, which are not in the repository.
 - **Wiki:** off (documentation lives in `docs/`).
 - **Projects:** off unless you plan to use them.
 
-## 4. Security (Settings → Code security)
+## 5. Security (Settings → Code security)
 
 - **Private vulnerability reporting:** on. `SECURITY.md` asks reporters to use
   "Security → Report a vulnerability", which only exists when this is enabled.
@@ -49,7 +56,7 @@ the two font files named in its header comment, which are not in the repository.
 - **Secret scanning** and **push protection:** on (free for public repositories). The project rule
   is that keys never enter the repository; push protection enforces it at `git push`.
 
-## 5. Actions (Settings → Actions → General)
+## 6. Actions (Settings → Actions → General)
 
 - **Workflow permissions:** *Read repository contents and packages permissions* (the default
   read-only token). `ci.yml` already asks only for `contents: read`; `factory-ticks.yml` asks for

@@ -9,11 +9,20 @@ Every agent reads this file first.
 | Layer | Where | Who changes it |
 |---|---|---|
 | **Framework** (constants) | `CLAUDE.md`, `.claude/agents/`, `.claude/skills/`, `config/` | Only the factory owner (a human) |
-| **Client data** (variables) | `clients/<client>/*.yaml`, `brand/`, `product-base/` | The onboarding agent, the feedback agent (only via a proposal and diff), the client via the orchestrator |
+| **Client data** (variables) | `clients/<client>/*.yaml`, `brand/`, `product-base/` | The owner's session (setup wizard); the onboarding agent (locked files only as drafts in `setup/drafts/`); the feedback agent (only via a proposal and diff); the client via the orchestrator |
 | **Working artifacts** | `clients/<client>/weeks/`, `media-index/`, `references/`, `memory/` | Agents, within their roles |
 
 An agent **never** edits the framework. If it believes a rule is getting in the way, it writes
 a proposal to `clients/<client>/memory/proposals.md`.
+
+**Your copy is yours.** This repository is a template. Whoever runs Claude Code in their own copy is
+the factory owner there: the main session (no agent role) may change anything in that copy, including
+the framework, and may add its own files, agents, skills and flows. The locked layer limits subagents
+and scheduled runs, not the owner. Client data lives only in the owner's own (private) repository;
+improvements for everyone go to the public template as a pull request.
+
+**First run.** If `config/active-client.txt` is `demo` or empty and the person wants to work on their
+own business (or says "set me up", in any language), use the `setup` skill.
 
 ## 2. How an agent starts any work
 1. Determine the client. By default it is `config/active-client.txt`.
@@ -108,7 +117,7 @@ Engine selection per format — `config/engines.yaml`. In brief:
 
 ## 9. Memory, metrics, permissions (details — docs/06)
 - **The locked layer** (the framework, `passport.yaml`, `product-base/`, `permissions.yaml`, `brand/consents.md`)
-  is changed only by a human. This is not a request: the write is blocked by the hook `scripts/guard/guard.py` according to
+  is changed only by a human (or by the owner's own session on their explicit "yes"). This is not a request: for every agent role and every scheduled run the write is blocked by the hook `scripts/guard/guard.py` according to
   `config/permissions-matrix.yaml`. If you get a denial, do not work around it; write a proposal to `memory/proposals.md`.
 - **Numbers** (`analytics/*`) are written only by scripts. Agents read them and draw conclusions into `memory/`.
 - A publication without a line in `analytics/registry.jsonl` is a post the factory will never know about.
@@ -120,8 +129,10 @@ Engine selection per format — `config/engines.yaml`. In brief:
 - Manual factory launch — the `dispatch` skill (the main session = the dispatcher).
 
 ## 10. Language and style
+**Chat replies use the language of the person's latest message,** whatever the client files use.
 Language is a setting, not a constant. Working files and all client-facing text (the weekly plan,
-approval pack, owner replies, captions, scripts) use the client's language: `passport.yaml: language`
-(a BCP-47 code, default `en`). The tone of each client is described in `brand/voice.md`.
+approval pack, messages prepared for the client, captions, scripts) use the client's language:
+`passport.yaml: language` (a BCP-47 code; the setup wizard asks for it, otherwise it is the language of
+the setup conversation). The tone of each client is described in `brand/voice.md`.
 Locale data (for example, stoplists for `scripts/qa/words_check.py --lang <code>`) lives in
 `config/locales/<lang>.yaml`.

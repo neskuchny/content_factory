@@ -128,8 +128,12 @@ def main():
     ap.add_argument("--client")
     ap.add_argument("--no-network", action="store_true")
     a = ap.parse_args()
-    clients = [a.client] if a.client else sorted(p.name for p in (ROOT / "clients").iterdir()
-                                                  if (p / "channels.yaml").exists())
+    # only confirmed clients: a client mid-setup (drafts waiting, no passport or permissions yet) has no
+    # spending limit on file and must not wake anyone
+    clients = [a.client] if a.client else sorted(
+        p.name for p in (ROOT / "clients").iterdir()
+        if (p / "channels.yaml").exists() and (p / "passport.yaml").exists()
+        and (p / "permissions.yaml").exists() and not (p / "setup" / "drafts").is_dir())
     wakes = []
     for c in clients:
         wakes += check_client(c, not a.no_network)

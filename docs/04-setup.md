@@ -10,7 +10,7 @@ You bring your own accounts and keys. The repository never contains keys, tokens
 | Component | Why | How |
 |---|---|---|
 | Claude Code account (Claude subscription, Max recommended) | All agents and scheduling | claude.ai |
-| Your own copy of this repository on GitHub (fork or clone) | Factory state (files = memory) | Fork or clone this repo and push it to your account |
+| Your own **private** copy of this repository on GitHub | Factory state (files = memory), including client data | Push a clone to a new private repository, or "Use this template" → Private. Not a fork: a fork of a public repository is public |
 | Higgsfield account (or another image/video generator) | Image and video generation | Your own account. Connector `https://mcp.higgsfield.ai/mcp` in claude.ai → Customize → Connectors; for local runs it is already listed in `.mcp.json`. Keys for any other generator go into environment secrets, never into the repo |
 | Linear (optional) | Task board | Linear connector; without it agents use `weeks/<W>/board.md` |
 | Google Drive (optional) | Finished creatives for the client, approval pack | Google Drive connector |
@@ -39,6 +39,7 @@ Each run clones the repository, works, and commits the result.
 
 > State the branch in the task prompt: by default a cloud run pushes to `claude/*`.
 > Make all tasks work in one branch, for example `factory`, and merge it into main yourself.
+> If you use the ticks below, put the same branch name into the repository variable `FACTORY_BRANCH`.
 
 Times are examples in your own time zone, deliberately off the hour.
 
@@ -93,14 +94,16 @@ Open the repository in Claude Code (CLI, desktop, or web) and say:
 "Run the weekly cycle for the active client." Convenient for the first weeks while the process is being tuned.
 
 ## 6. New client
-"Use the onboarding agent: here is the client's questionnaire / spreadsheet <link>. Create clients/<slug>/."
-To switch the active client, edit `config/active-client.txt`.
+Say **"Set me up"** (any language) — the `setup` skill runs the whole path: machine check
+(`python3 scripts/setup/preflight.py`), your own private copy, one-message interview, summary with
+sources, your confirmation, connections, optional automation, first result. For a second client say
+"Add another client"; with a questionnaire at hand: "Here is the client's questionnaire <link>, set up
+a new client." To switch the active client, edit `config/active-client.txt`.
 
 ## 7. First run with the demo client — checklist
 The repository ships with an example client, `clients/demo/` (a fictional specialty coffee roaster).
-Use it to see how the factory works before you onboard a real client. For your own client, copy
-`templates/client/` (or let the onboarding agent do it) and fill it in; to learn the layout, explore
-`clients/demo/`.
+Use it to see how the factory works before you onboard a real client. For your own client, say
+"Set me up" (§6); to learn the layout, explore `clients/demo/`.
 
 - [ ] Claude Code is running in your copy of the repository; ffmpeg, Node 22+, and Chromium are installed
 - [ ] Higgsfield (or another generator) is connected with your own account; keys, if any, live in environment secrets and never in the repo
@@ -108,4 +111,4 @@ Use it to see how the factory works before you onboard a real client. For your o
 - [ ] The credit limit in `clients/demo/permissions.yaml` is set to a value you accept
 - [ ] First manual run (mode C): "Run the weekly cycle for the active client"; review the result file by file
 - [ ] Only after that: a schedule (mode A) or ticks (§3.1)
-- [ ] For a real client: copy `templates/client/`, fill in `passport.yaml` (including `language`), `product-base/`, and `permissions.yaml`, answer the blocking questions in `open-questions.md`, choose the approval channel, then repeat the manual run for that client
+- [ ] For a real client: say "Set me up" (§6); confirm the summary so the drafts move into place; answer the blocking questions in `open-questions.md`; then repeat the manual run for that client

@@ -1,28 +1,33 @@
 # Product base
 
-The only source of facts for all agents (see skill `fact-check`). Empty at first: the client has to supply
-materials (catalog, specifications, price factors, FAQ, confirmed answers from specialists).
+The only source of facts for all agents (see skill `fact-check`). Empty at first: the client supplies
+materials (site, catalog, price list, specifications, FAQ, answers from specialists).
 
-## Structure (one file per product)
+## Structure (one file per topic; adapt the names to the business)
 ```
+about.md            # the business: what, where, since when, locations, delivery or service area
 product-a.md        # one file per product or product line
-product-b.md
-process.md          # how the work goes: request → measurement → design → production → delivery
-pricing-factors.md  # what drives the price (no concrete prices unless the client allows it)
+process.md          # how ordering, delivery or service works, step by step
+prices.md           # prices or price factors, each with may_publish and valid_until
 faq.md              # frequent questions and doubts + confirmed answers
-objects/            # completed projects: task, solution, details, result, photos
+cases/              # finished orders or projects: task, solution, result, photos (with consent)
 media/              # reference product photos for AI visualizations (2–3 angles, dimensions)
 ```
+
+## Every fact carries its source
+A link, a file, or "said by <name>, <role> on <date>". A fact without a source is a question for the
+client, not a fact. Prices also carry `may_publish: yes | no` (may it appear in a video or caption) and
+`valid_until` if they change.
 
 ## Product file template
 ```markdown
 # <Product>
 ## What it is and who it is for
-## Variants and configurations
-## Materials and components
+## Variants
+## Ingredients, materials or components
 ## Specifications (with source)
 ## Use and care
-## What affects the cost
+## Price (may_publish, valid_until, source)
 ## Frequent doubts → answer (who confirmed, date)
 ## Reference photos: media/<...>
 ```

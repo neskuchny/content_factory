@@ -274,6 +274,32 @@ class ProtectedLayer(unittest.TestCase):
                 self.assertEqual(write(p, agent="onboarding"), DENY)
         self.assertEqual(write("clients/demo/brand/voice.md", agent="onboarding"), ALLOW)
         self.assertEqual(write("clients/newco/channels.yaml", agent="onboarding"), ALLOW)
+        # ...so it writes drafts of the locked files, which the main session moves into place
+        for p in ("clients/newco/setup/drafts/passport.yaml", "clients/newco/setup/drafts/permissions.yaml",
+                  "clients/newco/setup/drafts/product-base/prices.md",
+                  "clients/newco/setup/drafts/brand/consents.md"):
+            with self.subTest(path=p):
+                self.assertEqual(write(p, agent="onboarding"), ALLOW)
+        self.assertEqual(write("config/active-client.txt", agent="onboarding"), DENY)
+
+    def test_only_the_owner_runs_setup_scripts(self):
+        # scripts/setup/ writes the locked layer itself, so no role may run it, however it is spelled
+        for cmd in ("python3 scripts/setup/new_client.py --slug x",
+                    "python3 -I scripts/setup/apply_drafts.py --slug x --yes",
+                    "cd /repo && python3 ./scripts/setup/new_client.py --slug x",
+                    "python3 \"scripts/setup/new_client.py\" --slug x",
+                    "cd scripts && python3 setup/new_client.py --slug x",
+                    "python3 -c \"import runpy; runpy.run_path('scripts/setup/apply_drafts.py')\"",
+                    "cd scripts/setup && ./apply_drafts.py --slug x --yes"):
+            for role in ("onboarding", "orchestrator", "producer"):
+                with self.subTest(cmd=cmd, role=role):
+                    self.assertEqual(bash(cmd, agent=role), DENY)
+            self.assertEqual(bash(cmd), ALLOW)  # the owner's session
+        # reading them and the read-only preflight stay allowed for roles
+        for cmd in ("cat scripts/setup/new_client.py", "grep -n LOCKED scripts/setup/apply_drafts.py",
+                    "python3 scripts/setup/preflight.py --json"):
+            with self.subTest(cmd=cmd):
+                self.assertEqual(bash(cmd, agent="onboarding"), ALLOW)
 
     def test_traversal_into_protected_is_denied(self):
         self.assertEqual(write("clients/demo/weeks/../../../CLAUDE.md", agent="producer"), DENY)
