@@ -183,7 +183,7 @@ def status_tables(text):
     res = []
     for head, rows in tables_in(text):
         low = [h.lower() for h in head]
-        if "status" in low and head and head[0] in ("#", "No", "No."):
+        if "status" in low and head and (head[0].split() or [""])[0] in ("#", "No", "No."):  # also "# (f18)"
             k = low.index("status")
             out = []
             for r in rows:

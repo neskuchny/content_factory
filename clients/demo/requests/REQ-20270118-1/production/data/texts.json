@@ -1,0 +1,48 @@
+{
+ "_note": "Copied character for character from shotlist.json (texts_exact, scene_labels_exact, cta). Do not edit by hand.",
+ "titles": [
+  {
+   "id": "T1",
+   "text": "When is your coffee at its best?"
+  },
+  {
+   "id": "T2",
+   "text": "Day 0: roasted on site"
+  },
+  {
+   "id": "T3",
+   "text": "We rest the beans 5 days"
+  },
+  {
+   "id": "T4",
+   "text": "Then every bag gets its roast date"
+  },
+  {
+   "id": "T5",
+   "text": "Best brewed about 5 to 28 days after roast"
+  },
+  {
+   "id": "T6",
+   "text": "Check the roast date on yours"
+  }
+ ],
+ "scene_labels": [
+  "0",
+  "5",
+  "28",
+  "DAYS AFTER ROAST",
+  "ROAST DATE"
+ ],
+ "cta": {
+  "title": "T6",
+  "handle": "@example_brewline",
+  "demo_mark": "Fictional demo brand"
+ },
+ "counter": [
+  "Day 1",
+  "Day 2",
+  "Day 3",
+  "Day 4",
+  "Day 5"
+ ]
+}
