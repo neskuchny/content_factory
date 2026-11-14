@@ -25,6 +25,26 @@ It is a harness, not an application:
 It is not a hosted service, a no-code tool, or an autoposter. By default it publishes nothing
 by itself.
 
+## Start here: your own factory in one session
+
+1. **Make your own private copy.** Client data (product facts, plans, metrics) belongs in your
+   repository, not in this one, and not in a fork (a fork of a public repository is public). Either
+   create an empty private repository and push a clone of this one there (keeps `git merge` updates
+   easy), or press **Use this template** → Private. Locally the `setup` wizard does the git part for
+   you; for a cloud session on claude.ai/code, start the session on your private copy.
+2. **Open your copy in Claude Code** (desktop, terminal, or a cloud session on claude.ai/code) and say
+   **"Set me up"** — in any language. Claude answers in the language you write in.
+3. **Answer ten questions** in one go: your business, materials, audience, platforms, tone, who
+   may appear on camera, approval, budget. Claude fills `clients/<you>/`, shows you a summary of what
+   it understood with a source for every fact, and keeps the passport, product facts, consents and
+   permissions as drafts until you say yes.
+4. **Get the first result:** a short video made with code (0 credits) or the plan of your first week.
+   Automation (scheduled runs) is optional and set up only if you ask.
+
+In your copy you are the owner: change rules, add your own agents, skills, flows and tasks freely.
+Improvements for everyone are welcome here as pull requests. Russian quick start:
+[README.ru.md](README.ru.md).
+
 ## See it in action
 
 Every video below was planned, produced and checked by the factory's agents. The first four are
@@ -210,8 +230,9 @@ factory reads and writes before you onboard anyone real.
    generation, and publishing is `manual`.
 
 Other run modes (scheduled cloud tasks, ticks via GitHub Actions, a server with Telegram) and
-the checklist for a real client are in [`docs/04-setup.md`](docs/04-setup.md). To add a client,
-copy `templates/client/` or ask the onboarding agent.
+the checklist for a real client are in [`docs/04-setup.md`](docs/04-setup.md). To add your own
+client, say "Set me up" (the [`setup`](.claude/skills/setup/SKILL.md) skill); to check your machine,
+run `python3 scripts/setup/preflight.py`.
 
 ## A complete example: from brief to approved video
 

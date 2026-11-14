@@ -133,6 +133,12 @@ def main():
         cmd = ti.get("command", "")
         entry["cmd"] = cmd[:200]
         paths, writing = bash_write_targets(cmd), True
+        # the setup scripts that write the locked layer (new client, confirmed drafts → passport,
+        # permissions, consents) are run only by the owner's interactive session. Reading them is fine;
+        # any interpreter call that names them is refused, however the path is spelled
+        if (agent != "owner" and re.search(r"\b(?:new_client|apply_drafts)\b", cmd)
+                and re.search(r"(?<![\w.-])(?:python[\d.]*|py|bash|sh|zsh|exec|env|uv|pipx)\b|(?:^|[\s;&|])\./", cmd)):
+            deny(f"{agent}: scripts/setup/ new_client and apply_drafts are run only by the owner's session", entry)
         # factory scripts (collectors, calculations) may be run by everyone: they write their own files.
         # Only a single plain command: no redirects into files and no ";", "&", "|", "`", "$(", otherwise
         # a write into a protected file could be appended to the script. Such commands get the normal checks.

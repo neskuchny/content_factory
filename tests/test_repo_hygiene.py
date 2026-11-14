@@ -18,10 +18,13 @@ SKIP_DIRS = {".git", "__pycache__", ".cache", "node_modules"}
 MAX_BYTES = 1_000_000
 
 CYRILLIC = re.compile("[" + chr(0x400) + "-" + chr(0x4FF) + "]")
-# Allowed Cyrillic: the Russian stoplist (a translation, by design) and two data files copied
+# Allowed Cyrillic: the Russian stoplist (a translation, by design), the Russian quick start, the
+# setup skill (its trigger phrases are listed in several languages) and two data files copied
 # unchanged from the upstream ffmpeg-skill (see .claude/skills/ffmpeg-skill/VENDORED.md).
 CYRILLIC_ALLOWED_PREFIXES = ("config/locales/",)
 CYRILLIC_ALLOWED_FILES = {
+    "README.ru.md",
+    ".claude/skills/setup/SKILL.md",
     ".claude/skills/ffmpeg-skill/references/scripts.md",
     ".claude/skills/ffmpeg-skill/scripts/_common/decision.py",
 }

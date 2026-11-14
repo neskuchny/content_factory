@@ -3,14 +3,25 @@ language: en   # BCP-47 code for client-facing text (approval pack, shoot briefs
 name: ""
 niche: ""
 geography: ""
+timezone: ""       # IANA name, e.g. Europe/Berlin; used for schedules and publishing times
+locations: []      # shops, offices, delivery area (only what the client said)
+contact:           # who set the factory up and answers questions
+  name: ""
+  role: ""
+approval:          # who approves the weekly pack and how it reaches them
+  approver: ""
+  channel: ""      # e.g. Telegram, e-mail, Google Drive comment
+  response_time: ""  # e.g. same day, within 2 days
 products: []
 audience:
   b2c_primary: ""
   b2c_jobs: []
   b2b_secondary: ""
-target_action: ""
+target_action: ""   # what the viewer should do after a video
+target_link: ""     # where that happens: site page, messenger bot, booking form
 crm: ""
 site: ""
 trust_triggers: []
 adjacent_niches: []
-people: []
+people: []         # who appears or films: {name, role, films: true|false}; consent is in brand/consents.md
+never_say: []      # claims and topics the client forbids (also listed in brand/voice.md)

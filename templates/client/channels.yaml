@@ -1,7 +1,8 @@
 # role: hub — produces new content; spoke — only adapts finished content
 channels:
   <channel_key>:
-    role: hub | spoke
+    role: hub          # hub or spoke
+    status: active     # active, or planned (wanted, no account yet)
     url: ""
     access: ""
     purpose: ""

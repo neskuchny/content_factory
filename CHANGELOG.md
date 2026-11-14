@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- First-run wizard: the `setup` skill (machine check, own private copy, one-message interview, summary
+  with sources, confirmation before locked files are written, optional connections and automation,
+  first result). Claude talks in the language the person writes in.
+- `scripts/setup/preflight.py` (what is installed and whether this is your own copy) and
+  `scripts/setup/new_client.py` (new client folder from `templates/client/`).
+- README "Start here" section and a Russian quick start (`README.ru.md`).
 - README showcase: an animated hero, a gallery of five videos made by the factory with how each was made,
   generation cost and QC/jury results (`docs/showcase/`, 720p copies).
 - English versions of four videos from the factory's own promo series (AI character clip, "Council at the Table",
@@ -18,6 +24,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   a 1280×640 social preview image, badges, and maintainer notes for GitHub settings.
 
 ### Changed
+- The onboarding agent writes drafts of locked client files to `clients/<slug>/setup/drafts/`; the main
+  session moves them into place after the person confirms. Before, the permissions hook blocked the
+  agent from writing the passport, product base and consents, so onboarding by a subagent could not finish.
+- `CLAUDE.md`: your copy is yours (the main session may change anything in it); first-run rule; talk in
+  the person's language.
+- `factory-ticks.yml` checks out the branch in the repository variable `FACTORY_BRANCH`, or the default
+  branch, instead of a hard-coded `factory` branch that a fresh copy does not have.
 - `docs/07-how-it-works.md`: the skill count is 21 (incl. the vendored ffmpeg-skill).
 - Tests: per-folder size limits for README media; demo checks skip binary files; JSON files may be arrays.
 

@@ -4,8 +4,9 @@
 #
 # The hourly schedule is DISABLED by default so that a fresh fork/public copy does not run on its own.
 # To enable it: (1) create the two secrets above (Settings -> Secrets and variables -> Actions),
-# (2) make sure the `factory` branch used below exists (it holds the client data the tick commits to),
-# (3) uncomment the `schedule:` block. Until then the workflow only runs manually (workflow_dispatch).
+# (2) optional: set the repository variable FACTORY_BRANCH (Settings -> Secrets and variables ->
+#     Actions -> Variables) to the branch your scheduled tasks work in; without it the tick uses the
+#     default branch, (3) uncomment the `schedule:` block. Until then it only runs manually.
 name: factory-ticks
 on:
   # schedule:
@@ -18,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-        with: { ref: factory }
+        with: { ref: "${{ vars.FACTORY_BRANCH || github.ref_name }}" }
       - run: pip install pyyaml
       - name: Collect metrics (no model)
         run: |
