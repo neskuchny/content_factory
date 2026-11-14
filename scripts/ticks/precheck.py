@@ -82,7 +82,13 @@ def check_client(c, network):
     ap = wdir / "06-approval.md"
     if ap.exists():
         txt = ap.read_text(encoding="utf-8")
-        decided = re.findall(r"^## (\S+).*?decision:\s*(?!pending)(\S.*)$", txt, re.S | re.M)
+        # each "## <ID>" section is parsed on its own, so a decision cannot leak into a neighbouring section
+        decided = []
+        for sec in re.split(r"(?m)^## ", txt)[1:]:
+            uid = sec.split(None, 1)[0] if sec.strip() else ""
+            d = re.search(r"(?m)^\s*(?:[-*]\s*)?decision:\s*(\S.*)$", sec)
+            if uid and d and not d.group(1).startswith("pending"):
+                decided.append((uid, d.group(1)))
         pubs = (wdir / "07-publications.md").read_text(encoding="utf-8") if (wdir / "07-publications.md").exists() else ""
         todo = [uid for uid, _ in decided if uid not in pubs]
         if todo:

@@ -10,7 +10,6 @@ Main session without agent_type:
   FACTORY_MODE=run  -> acts as orchestrator (scheduled runs);
   otherwise         -> owner (interactive human work); only secrets are denied.
 """
-import fnmatch
 import json
 import os
 import re
@@ -32,11 +31,17 @@ def load_matrix():
         return None
 
 
+def glob_re(pattern):
+    """Path glob -> regex. '*' and '?' stay within one path segment; '**/' and '/**' span any number of dirs."""
+    s = re.escape(pattern)
+    s = s.replace(r"\*\*/", "(?:.*/)?").replace(r"/\*\*", "(?:/.*)?").replace(r"\*\*", ".*")
+    s = s.replace(r"\*", "[^/]*").replace(r"\?", "[^/]")
+    return re.compile(s)
+
+
 def match(path, patterns):
     for p in patterns or []:
-        if p.startswith("**/") and match(path, [p[3:]]):
-            return p
-        if fnmatch.fnmatchcase(path, p) or (p.endswith("/**") and (path == p[:-3] or path.startswith(p[:-2]))):
+        if glob_re(p).fullmatch(path):
             return p
     return None
 
@@ -49,6 +54,18 @@ def rel(path, cwd):
         return str(p.resolve().relative_to(ROOT))
     except ValueError:
         return None  # outside the repository
+
+
+# outside the repository, roles may write only here; the path is compared after resolving ".." and symlinks
+SCRATCH_ROOTS = {Path("/tmp"), Path("/tmp").resolve(), Path("/dev")}
+
+
+def scratch_ok(path, cwd):
+    p = Path(path)
+    if not p.is_absolute():
+        p = Path(cwd or ROOT) / p
+    p = p.resolve()
+    return any(p == base or base in p.parents for base in SCRATCH_ROOTS)
 
 
 def bash_write_targets(cmd):
@@ -116,8 +133,11 @@ def main():
         cmd = ti.get("command", "")
         entry["cmd"] = cmd[:200]
         paths, writing = bash_write_targets(cmd), True
-        # factory scripts (collectors, calculations) may be run by everyone: they write their own files
-        if re.match(r"^\s*(python3|bash)\s+(-I\s+)?scripts/(collect|analytics|ticks)/", cmd):
+        # factory scripts (collectors, calculations) may be run by everyone: they write their own files.
+        # Only a single plain command: no redirects into files and no ";", "&", "|", "`", "$(", otherwise
+        # a write into a protected file could be appended to the script. Such commands get the normal checks.
+        if (re.match(r"^\s*(python3|bash)\s+(-I\s+)?scripts/(collect|analytics|ticks)/", cmd)
+                and not paths and not re.search(r"[;&|`\n]|\$\(", cmd)):
             log({**entry, "decision": "allow", "reason": "factory script"})
             sys.exit(0)
     else:
@@ -128,7 +148,7 @@ def main():
         r = rel(raw, cwd)
         entry["path"] = r or raw
         if r is None:
-            if writing and agent != "owner" and not str(raw).startswith(("/tmp/", "/dev/")):
+            if writing and agent != "owner" and not scratch_ok(raw, cwd):
                 deny(f"{agent}: writing outside the repository is not allowed ({raw})", entry)
             continue
         if match(r, m.get("read_deny")):

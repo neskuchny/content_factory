@@ -243,12 +243,9 @@ class ApprovalPack(unittest.TestCase):
         for w in wakes:
             self.assertEqual(w["client"], "demo")
 
-    # KNOWN DEFECT in scripts/ticks/precheck.py (reported, not fixed here): the decision regex
-    # `^## (\S+).*?decision:\s*(?!pending)(\S.*)$` runs with re.S, so a section whose decision is
-    # `pending` is stitched to the NEXT section's decision. Against the demo pack it reports the
-    # unit "Questions" (a non-unit heading) instead of W02-R01 and W02-C01. expectedFailure until the
-    # regex is made section-aware; then remove the decorator.
-    @unittest.expectedFailure
+    # Regression: precheck used one regex with re.S over the whole pack, so a section whose decision
+    # was `pending` got stitched to the NEXT section's decision (it reported the non-unit heading
+    # "Questions" instead of W02-R01 and W02-C01). Sections are now parsed one by one.
     def test_precheck_reports_exactly_the_decided_units(self):
         pre = load_precheck()
         pre.iso_week = lambda d=None: "2027-W02"

@@ -335,13 +335,12 @@ class RoleWrites(unittest.TestCase):
 
     @classmethod
     def lax_discrepancies(cls):
-        """(role, path) pairs where the guard's '*'-crosses-'/' matching differs from the strict reading."""
+        """(role, path) pairs where an fnmatch-style matcher ('*' crosses '/') would differ from the strict reading."""
         return [(r, p) for r in ROLES for p in cls.probe_paths()
                 if lax_role_decision(r, p) != expected_role_decision(r, p)]
 
     def test_role_matrix_matches_oracle(self):
-        skip = set(self.lax_discrepancies())  # covered by test_star_does_not_cross_directories
-        jobs = [(role, p) for role in ROLES for p in self.probe_paths() if (role, p) not in skip]
+        jobs = [(role, p) for role in ROLES for p in self.probe_paths()]
         with concurrent.futures.ThreadPoolExecutor(max_workers=12) as ex:
             results = list(ex.map(lambda j: write(j[1], agent=j[0]), jobs))
         for (role, p), rc in zip(jobs, results):
@@ -349,14 +348,16 @@ class RoleWrites(unittest.TestCase):
             with self.subTest(role=role, path=p, want=want):
                 self.assertEqual(rc, want)
 
-    # KNOWN GAP in scripts/guard/guard.py (reported, not fixed here): matching uses fnmatch, where
-    # '*' also matches '/'. So `clients/*/references/**` (analyst) also matches
-    # `clients/demo/brand/references/x.md` (feedback's), `clients/*/weeks/*/01-plan.md` matches
-    # deeper paths, etc.: roles can write slightly more than the matrix says. The protected layer
-    # is unaffected (it only gets broader). expectedFailure until the matcher is made segment-aware.
-    @unittest.expectedFailure
+    # Regression: the guard once matched with fnmatch, where '*' also crosses '/'. Then
+    # `clients/*/references/**` (analyst) matched `clients/demo/brand/references/x.md` (feedback's) and
+    # `clients/*/weeks/*/01-plan.md` matched deeper paths. These are exactly the probe paths where such a
+    # matcher disagrees with the strict reading; the real guard must follow the strict one.
     def test_star_does_not_cross_directories(self):
-        self.assertEqual(self.lax_discrepancies(), [])
+        pairs = self.lax_discrepancies()
+        self.assertTrue(pairs, "the probe set no longer exercises '*' vs '/'; extend probe_paths()")
+        for role, p in pairs:
+            with self.subTest(role=role, path=p):
+                self.assertEqual(write(p, agent=role), expected_role_decision(role, p))
 
     def test_every_role_can_write_each_of_its_own_unprotected_globs(self):
         for role, spec in ROLES.items():
@@ -504,22 +505,24 @@ class BashWrites(unittest.TestCase):
                 with self.subTest(cmd=cmd, role=role):
                     self.assertEqual(bash(cmd, agent=role), ALLOW)
 
-    # KNOWN GAP in scripts/guard/guard.py (reported, not fixed here): a command that merely STARTS
-    # with `python3 scripts/(collect|analytics|ticks)/...` is whitelisted before any redirect or
-    # chained command is inspected, so any role can append `> CLAUDE.md` or `; rm ...` to it.
-    # These tests state the intended behaviour. They are marked expectedFailure so CI stays green
-    # until the owner fixes the guard; once fixed they will report "unexpected success" and the
-    # decorator must then be removed.
-    @unittest.expectedFailure
+    # Regression: a command that merely STARTS with `python3 scripts/(collect|analytics|ticks)/...`
+    # used to be whitelisted before any redirect or chained command was inspected, so any role could
+    # append `> CLAUDE.md` or `; rm ...` to it. Now only a single plain command is whitelisted.
     def test_factory_script_prefix_does_not_bypass_redirect_check(self):
         self.assertEqual(bash("python3 scripts/ticks/precheck.py > CLAUDE.md", agent="producer"), DENY)
         self.assertEqual(bash("python3 -I scripts/analytics/costs.py --client demo >> clients/demo/passport.yaml",
                               agent="reviewer"), DENY)
 
-    @unittest.expectedFailure
     def test_factory_script_prefix_does_not_bypass_chained_commands(self):
         self.assertEqual(bash("python3 scripts/ticks/precheck.py; rm CLAUDE.md", agent="producer"), DENY)
         self.assertEqual(bash("python3 scripts/ticks/precheck.py && tee config/x.yaml", agent="producer"), DENY)
+        self.assertEqual(bash("python3 scripts/ticks/precheck.py | tee CLAUDE.md", agent="producer"), DENY)
+
+    def test_factory_script_with_harmless_pipe_or_stderr_redirect_still_allowed(self):
+        for cmd in ("python3 -I scripts/analytics/costs.py --client demo 2>&1 | tail -2",
+                    "python3 scripts/ticks/precheck.py --client demo --no-network > /dev/null"):
+            with self.subTest(cmd=cmd):
+                self.assertEqual(bash(cmd, agent="producer"), ALLOW)
 
 
 # --------------------------------------------------------------------------- outside the repository
@@ -536,11 +539,14 @@ class OutsideRepo(unittest.TestCase):
             with self.subTest(role=role):
                 self.assertEqual(write("/tmp/zz-guard-test.txt", agent=role), ALLOW)
 
-    # KNOWN GAP in scripts/guard/guard.py (reported, not fixed here): the /tmp exemption is a string
-    # prefix check on the raw path, so `/tmp/../etc/x` passes. Same expectedFailure convention as above.
-    @unittest.expectedFailure
+    # Regression: the /tmp exemption used to be a string-prefix check on the raw path, so
+    # `/tmp/../etc/x` passed. The path is now resolved before the check.
     def test_tmp_prefix_does_not_allow_traversal_out_of_tmp(self):
         self.assertEqual(write("/tmp/../etc/zz-guard-test", agent="producer"), DENY)
+        self.assertEqual(write("/tmp/a/../../root/.bashrc", agent="studio"), DENY)
+
+    def test_tmp_relative_path_with_tmp_cwd_is_allowed(self):
+        self.assertEqual(write("zz-guard-test.txt", agent="producer", cwd="/tmp"), ALLOW)
 
     def test_role_can_write_dev_null(self):
         self.assertEqual(write("/dev/null", agent="reviewer"), ALLOW)
