@@ -1,0 +1,49 @@
+# Anti-jargon stoplist for English-language clients (`language: en` in passport.yaml, the default).
+# Used by scripts/qa/words_check.py (--lang en). It flags stock LLM/marketing clichés, filler and
+# "generated-sounding" phrasing in a video script; it is a hint for the author/reviewer, never a
+# hard block. Same structure as config/locales/ru.yaml; add a new language by copying this file to
+# config/locales/<lang>.yaml.
+#
+# Format: a list of rules. Each rule has
+#   pattern: a Python regular expression, applied to the LOWERCASED line (re.search);
+#   reason:  the message shown to the author.
+# Rules whose reason says "check product-base" flag claims and numbers that must come from the
+# client's product base (see the fact-check skill).
+language: en
+rules:
+  - pattern: '\bnot\s+[^.,!?;:]{1,40}?,\s*but\s+'
+    reason: '"not X, but Y" construction: a frequent marker of generated text'
+  - pattern: '\b(it|this|that)(\s+is|''s)\s+not\s+(just|only|merely|simply)\b'
+    reason: '"it''s not just ..." cliché'
+  - pattern: '\bnot\s+(just|only|merely|simply)\s+\w+\s*[,—-]\s*(but|it''s)\b'
+    reason: '"not just X, but Y" cliché'
+  - pattern: '\b(truly|incredibly|absolutely|literally|utterly|remarkably|amazing|stunning|breathtaking|unique|revolutionary|groundbreaking|mind-?blowing)\b'
+    reason: "empty intensifier"
+  - pattern: '\b(in today''s\s+(fast-?paced|digital|modern|ever-?changing)\s+world|in a world where|let''s\s+(dive|delve|unpack|explore)|imagine\s+a\s+world|picture\s+this|dive\s+(in|into)|buckle\s+up)\b'
+    reason: "stock opener"
+  - pattern: '\bdelv(e|es|ed|ing)\b'
+    reason: '"delve" is a classic LLM word'
+  - pattern: '\b(unlock|unleash|elevate|supercharge|empower)(s|ed|ing)?\b'
+    reason: "advertising cliché verb"
+  - pattern: '\b(game-?chang(er|ing)|seamless(ly)?|cutting-?edge|state-of-the-art|next-?level|one-?stop-?shop|look\s+no\s+further|secret\s+to\s+success|key\s+to\s+success|perfect\s+solution|ideal\s+solution)\b'
+    reason: "advertising cliché"
+  - pattern: '\b(tapestry|testament|realm|plethora|myriad|multifaceted|pivotal|intricate|meticulous(ly)?|vibrant|robust|holistic|synerg\w+)\b'
+    reason: "stock LLM vocabulary"
+  - pattern: '\b(leverag(e|es|ed|ing)|foster(s|ed|ing)?|underscor(e|es|ed|ing)|embark(s|ed|ing)?|navigat(e|es|ed|ing)\s+the\s+(complexit\w+|landscape))\b'
+    reason: "stock LLM verb: use a plain word"
+  - pattern: '\b(digital|evolving|ever-?changing|modern)\s+landscape\b'
+    reason: '"landscape" cliché'
+  - pattern: '\b(as if|as though|like)\b.{0,30}\b(whisper|danc|sing)\w*'
+    reason: "personification cliché"
+  - pattern: '\bwhat\s+if\b'
+    reason: '"what if ..." is a stock hook'
+  - pattern: '\b(it''s|it\s+is)\s+(worth|important\s+to)\s+(not|mention)\w*|\b(worth\s+noting|important\s+to\s+note|needless\s+to\s+say|it\s+goes\s+without\s+saying)\b'
+    reason: "filler phrase"
+  - pattern: '\b(in\s+conclusion|to\s+sum\s+up|in\s+summary|to\s+summarize|all\s+in\s+all|at\s+the\s+end\s+of\s+the\s+day)\b'
+    reason: "filler phrase"
+  - pattern: '\b(best|number\s+one|guarantee\w*|free|discount\w*|sales?|promo\w*)\b|#\s*1\b|\bno\.\s*1\b'
+    reason: "promise/fact: check product-base (fact-check)"
+  - pattern: '\d+\s*(\$|usd|eur|€|£|%|years?|days?|months?|hours?|weeks?|sq\s*ft|sqm|m²|m2|cm|mm|kg)'
+    reason: "number with a unit: only from product-base"
+  - pattern: '(?<=\s)[—–](?=\s)'
+    reason: "dash in on-screen text: check whether a period is better"

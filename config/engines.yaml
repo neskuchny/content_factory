@@ -1,0 +1,135 @@
+# Routing: format -> production engine.
+# Source: docs/02-research-formats-and-tools.md (section 4), docs/05-video-formats-catalog.md.
+# For videos with several steps, see the full flow in flows/ (the flow field).
+# Engines: code | higgsfield | skill:<name> | manual
+# Rule for all formats: text, numbers, and logos — code only.
+
+formats:
+  walkthrough_env_swap:      # changing the environment around a person
+    flow: f02-environment-swap
+    engine: higgsfield
+  footage_plus_images:
+    flow: f03-footage-plus-images
+    engine: code
+  object_in_shot:            # an object appears in the frame with a person and disappears
+    flow: f05-object-insert-inshot
+    engine: higgsfield
+  interior_and_drone:
+    flow: f06-interior-and-drone
+    engine: higgsfield
+  many_to_one:
+    flow: f08-many-to-one
+    engine: code
+  talking_head:
+    flow: f12-talking-head
+    engine: code
+  saas_ui:
+    flow: f14-saas-ui
+    engine: code
+  process_plus_visuals:
+    flow: f15-process-plus-visuals
+    engine: code
+  reels_real_footage:        # Reels from real footage of sites and production
+    flow: f01-walkthrough-overlay
+    engine: code
+    tools: [ffmpeg, hyperframes, remotion]
+    notes: "Editing source footage, subtitles, badges. Hook in the first 1–2 seconds."
+  cutdown:                   # cutting a long video into Shorts/Reels
+    flow: f07-long-to-short
+    engine: skill:claude-shorts
+    fallback: code
+    notes: "whisper -> candidates -> human selection -> cut at word boundaries -> 9:16."
+  ai_visualization:          # "how it could be": a structure appearing on a plot of land
+    flow: f04-object-insert-broll
+    engine: higgsfield
+    pipeline: [keyframe_image, review, image_to_video, review, code_overlay]
+    notes: "Reference — real photos and dimensions of the product. The \"AI visualization\" badge is added by code."
+  product_scene:             # the product in its surroundings, lifestyle
+    flow: f17-product-commercial
+    engine: higgsfield
+    workflow: product-photoshoot
+  showcase:                  # showing an object/product
+    flow: f01-walkthrough-overlay
+    engine: higgsfield
+    pipeline: [remove_background, image, image_to_video, code_assembly]
+  exploded_view:             # taking a structure apart into its components
+    flow: f15-process-plus-visuals
+    engine: higgsfield
+    alt: skill:anatomy       # for explaining a principle, not a real product
+    notes: "Check the components against product-base/; AI invents the internals."
+  carousel:
+    engine: code
+    tools: [html, playwright]
+    size: 1080x1350
+  code_film:                 # code film: 3D three.js / 2D, rendered in headless Chromium
+    flow: f18-code-film
+    engine: code
+    tools: [threejs, gsap, playwright, ffmpeg-skill]
+    notes: "0 credits. Not for realistic people. The client's product — only with the dimensions from product-base."
+  infographic:
+    flow: f10-infographic
+    engine: code
+    tools: [html, svg, hyperframes, remotion]
+  stories:
+    engine: code
+    size: 1080x1920
+  cover:
+    engine: code
+    alt: higgsfield/thumbnail-generation
+  comic:
+    flow: f11-comic-cartoon
+    engine: higgsfield
+    workflow: character-sheet
+    assembly: code
+  person_insert:             # a person in the scene
+    flow: f13-avatar
+    engine: higgsfield
+    requires: consent
+  storyline_or_film:
+    flow: f16-brand-film
+    engine: higgsfield
+    pipeline: [script, shotlist_json, references, keyframes, image_to_video, code_assembly, audio]
+  brand_reel:
+    engine: code
+    broll: higgsfield
+  long_video:                # a long YouTube episode
+    engine: manual           # shot by the client
+    edit: code               # or DaVinci Resolve MCP if Studio is available
+  restoration:
+    flow: f09-restoration
+    engine: higgsfield
+    review: human
+
+engines:
+  code:
+    install:
+      - "npx skills add heygen-com/hyperframes"
+      - "npx skills add remotion-dev/skills   # license: paid for companies of 4 or more people"
+    requires: [node>=22, ffmpeg, chromium]
+  higgsfield:
+    mcp: "https://mcp.higgsfield.ai/mcp"
+    models:   # verified via models_explore 2026-10-24
+      image_edit: [nano_banana_pro, gpt_image_2_5, seedream_v5_pro]
+      outpaint: [flux_2_pro_outpaint]
+      first_last_frame: [kling_o3_flf, kling4_0]
+      image_to_video: [seedance_2_0, seedance_2_5, kling4_0, kling_o3_image_reference, cinematic_studio_video_4_0, veo3_1]
+      video_edit: [kling_video_edit, kling4_0, seedance_2_5, cinematic_studio_video_4_0, flux_3_video_edit]
+      video_extend: [seedance_2_5, cinematic_studio_video_4_0]
+      replace_object: [hf_mult_replace_object]
+      lipsync: [sync_so]
+      reframe: [reframe]          # expensive: 30 s at 1080p ≈ 365 credits
+      layers: [image_decompose, video_background_remover]
+      upscale: [video_upscale, topaz_video]
+    editor: "Higgsedit (workflow video-editing) — editing in the Higgsfield cloud sandbox"
+    workflows: [faceless-video, ugc-video, ad-multiplier, ads-studio, product-photoshoot,
+                brand-asset-creation, character-sheet, thumbnail-generation, narration,
+                video-montage, video-editing, katana]
+    cost_control: "Before generating — a credit estimate; the sum is written to weeks/<W>/costs.md"
+  sound:   # the sound-design skill
+    library: "clients/<c>/brand/sounds/<tag>/ (+ license passport <file>.json)"
+    openverse: "scripts/media/openverse.py — CC0/CC BY; key OPENVERSE_CLIENT_ID/SECRET (optional)"
+    epidemic_sound: "official MCP (beta), paid subscription, for flagship videos"
+    generate: [mirelo_text_to_audio, sonilo_music, elevenlabs_v4]   # Higgsfield, credits
+  skills:
+    claude-shorts: "github.com/AgriciDaniel/claude-shorts"
+    anatomy: "npx skills add wheresryan22/anatomy"

@@ -1,0 +1,12 @@
+# FICTIONAL demo client.
+# confirmed — said by the client; proposed — a suggestion awaiting confirmation
+week:
+  instagram:
+    reels:            { min: 2, confirmed: true }
+    reels_variants:   { per_topic: 3, proposed: true }   # sighting round: 3–5 fully different variants per topic
+    ai_visualization: { max: 1, confirmed: true }
+    carousels:        { min: 1, proposed: true }
+  telegram_channel:   { min: 2, max: 3, confirmed: true }
+  pinterest:          { pins: 3, proposed: true }
+month: {}
+reserve_for_news: 0.2   # share of the plan kept free for news hooks

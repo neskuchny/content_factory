@@ -1,0 +1,15 @@
+# FICTIONAL demo client.
+base_url: "https://brewline.example"
+landing_pages:            # product → page
+  harbor_blend: "https://brewline.example/beans/harbor-blend"
+  lantern_light: "https://brewline.example/beans/lantern-light"
+  night_shift: "https://brewline.example/beans/night-shift"
+  shop_visit: "https://brewline.example/visit"
+sources:
+  instagram: { utm_source: instagram, utm_medium: social }
+  telegram_channel: { utm_source: telegram, utm_medium: social }
+  pinterest: { utm_source: pinterest, utm_medium: social }
+campaign: "<YYYY-Www>"        # e.g. 2027-W02
+content: "<ID>-<placement>"   # e.g. W02-R01-bio
+# Example result for W02-R01 on Instagram:
+#   https://brewline.example/beans/harbor-blend?utm_source=instagram&utm_medium=social&utm_campaign=2027-W02&utm_content=W02-R01-bio

@@ -1,0 +1,15 @@
+# FICTIONAL demo client — placeholders only.
+# Where to take source material from: yandex_disk / google_drive / telegram / local
+# (the yandex_disk key is read by scripts/ticks/precheck.py; an empty list means "nothing to poll")
+
+yandex_disk: []
+
+google_drive: []
+
+local:
+  - { path: "inbox/", label: "files the owner drops in during the week", priority: high }
+
+inbox:
+  # where the client sends new material
+  telegram: "example approval chat (placeholder)"
+  folder: "inbox/ — one folder called 'New' for fresh footage"

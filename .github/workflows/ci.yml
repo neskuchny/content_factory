@@ -1,0 +1,29 @@
+# Continuous integration: byte-compile every Python file and run the unittest suite in tests/.
+# Needs no secrets and only read access to the repository. The only third-party dependency is PyYAML.
+name: ci
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          if [ -f requirements.txt ]; then
+            python -m pip install -r requirements.txt
+          else
+            python -m pip install pyyaml
+          fi
+      - name: Byte-compile all Python files
+        run: |
+          find scripts .claude tests -name '*.py' -print0 | xargs -0 python -m py_compile
+      - name: Run tests
+        run: python -m unittest discover -s tests -t . -v

@@ -1,0 +1,16 @@
+base_url: "TODO"          # the client's website
+landing_pages:            # product → page
+  product_a: "TODO"
+  product_b: "TODO"
+sources:
+  instagram: { utm_source: instagram, utm_medium: social }
+  youtube:   { utm_source: youtube,   utm_medium: video }
+  vk_video:  { utm_source: vk_video,  utm_medium: video }
+  rutube:    { utm_source: rutube,    utm_medium: video }
+  vk_group:  { utm_source: vk,        utm_medium: social }
+  telegram_channel: { utm_source: telegram, utm_medium: social }
+  pinterest: { utm_source: pinterest, utm_medium: social }
+  threads:   { utm_source: threads,   utm_medium: social }
+  yandex_maps: { utm_source: yandex_maps, utm_medium: maps }
+campaign: "<YYYY-Www>"
+content: "<ID>-<placement>"

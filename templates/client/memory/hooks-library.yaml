@@ -1,0 +1,11 @@
+# Hook library: types, examples and per-platform statistics. Updated by analyst at the retro.
+# Selection rule: 70 % proven (n ≥ 3, median ≥ 1.2), 30 % exploring new/rare ones.
+types:
+  contrarian:     { title: "Contradiction",                 example: "", stats: {} }
+  result_first:   { title: "Result first",                  example: "", stats: {} }
+  common_mistake: { title: "The mistake everyone makes",    example: "", stats: {} }
+  before_after:   { title: "Visual shock / before-after",   example: "", stats: {} }
+  open_loop:      { title: "Open loop / question",          example: "", stats: {} }
+  number_stakes:  { title: "Number or stakes",              example: "", stats: {} }
+  pain_direct:    { title: "Addressing the pain directly",  example: "", stats: {} }
+# stats format: { "<platform>/<format>": { n: 0, median_mult: null, last: null } }
