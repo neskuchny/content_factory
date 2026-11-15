@@ -54,6 +54,16 @@ It makes sense as a manual tool for a human on their own computer with a GPU. We
 - **shot continuity** — the next shot starts from the last frame of the previous one (we have FLF);
 - **per-frame versions and review** — we have review.md and git, no UI.
 
+## 4. treg (superdesigndev) — Apache-2.0 with extra terms, hosted gateway "OpenRouter for agent tools"
+One token and one prepaid dollar balance for many video, image and voice models plus social-data, web
+and enrichment tools; MCP (`https://treg.to/mcp/v2/`), CLI and an HTTP proxy; the owner's own provider
+keys take priority and are not metered. **Adopted as a second paid engine** next to Higgsfield
+(`config/engines.yaml: treg`, skill `treg-gateway`): useful when a model is not on Higgsfield or is
+cheaper there. Not adopted: the `curl | sh` installer, `treg scan/upload` (registers local keys with a
+team server), its "call without asking" and "star the repo" defaults, people/company enrichment.
+Spending follows our rules: estimate first, `spending.treg_usd_week`, studio only, cost into
+`manifest.json → usd_direct` (counted by `scripts/analytics/costs.py`).
+
 ## Adoption plan (proposal)
 | # | What | Cost | Effect |
 |---|---|---|---|

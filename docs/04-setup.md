@@ -12,6 +12,7 @@ You bring your own accounts and keys. The repository never contains keys, tokens
 | Claude Code account (Claude subscription, Max recommended) | All agents and scheduling | claude.ai |
 | Your own **private** copy of this repository on GitHub | Factory state (files = memory), including client data | Push a clone to a new private repository, or "Use this template" → Private. Not a fork: a fork of a public repository is public |
 | Higgsfield account (or another image/video generator) | Image and video generation | Your own account. Connector `https://mcp.higgsfield.ai/mcp` in claude.ai → Customize → Connectors; for local runs it is already listed in `.mcp.json`. Keys for any other generator go into environment secrets, never into the repo |
+| treg account (optional) | Many video, image and voice models on one prepaid dollar balance | Connector `https://treg.to/mcp/v2/` in Claude settings → Connectors, sign in there (local runs: already in `.mcp.json`). Set `spending.treg_usd_week` in the client's `permissions.yaml`. Do not use treg's `curl … \| sh` installer or `treg scan/upload` for the factory; see the `treg-gateway` skill |
 | Linear (optional) | Task board | Linear connector; without it agents use `weeks/<W>/board.md` |
 | Google Drive (optional) | Finished creatives for the client, approval pack | Google Drive connector |
 | Shared drive with client sources (optional, e.g. Yandex Disk) | Client raw footage | Yandex Disk public API needs no key. In a cloud environment allow the domains `cloud-api.yandex.net`, `downloader.disk.yandex.ru` |
@@ -106,7 +107,7 @@ Use it to see how the factory works before you onboard a real client. For your o
 "Set me up" (§6); to learn the layout, explore `clients/demo/`.
 
 - [ ] Claude Code is running in your copy of the repository; ffmpeg, Node 22+, and Chromium are installed
-- [ ] Higgsfield (or another generator) is connected with your own account; keys, if any, live in environment secrets and never in the repo
+- [ ] Higgsfield and/or treg (or another generator) is connected with your own account; keys, if any, live in connector settings or environment secrets and never in the repo
 - [ ] `config/active-client.txt` contains `demo` (or pass `--client demo` to scripts)
 - [ ] The credit limit in `clients/demo/permissions.yaml` is set to a value you accept
 - [ ] First manual run (mode C): "Run the weekly cycle for the active client"; review the result file by file

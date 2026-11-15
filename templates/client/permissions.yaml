@@ -11,6 +11,9 @@ messages:
 
 spending:
   generation_credits_week: 0      # TODO: weekly Higgsfield limit without approval
+  treg_usd_week: 0                # weekly treg limit in US dollars without approval (0 = ask every time)
+  # request_credits: {}           # one-off Higgsfield limits per request: REQ-<id>: <credits>
+  # request_usd: {}               # one-off treg limits per request: REQ-<id>: <dollars>
   paid_placements: approval_each  # every paid placement needs its own budget approval
 
 escalate_to_human:

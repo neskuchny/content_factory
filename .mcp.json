@@ -3,6 +3,10 @@
     "higgsfield": {
       "type": "http",
       "url": "https://mcp.higgsfield.ai/mcp"
+    },
+    "treg": {
+      "type": "http",
+      "url": "https://treg.to/mcp/v2/"
     }
   }
 }

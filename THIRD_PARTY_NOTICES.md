@@ -16,6 +16,15 @@ material.
 
 It requires a local FFmpeg installation (FFmpeg itself is not included and has its own licenses).
 
+## External service: treg
+
+- Site: https://treg.to; source: https://github.com/superdesigndev/treg
+- License: Apache License 2.0 with additional terms (no redistribution as a competing hosted or managed
+  registry without the authors' permission; calling the hosted service is allowed).
+- No code is vendored. The factory only lists the hosted MCP endpoint in `.mcp.json` and describes how
+  to use it in `.claude/skills/treg-gateway/SKILL.md`. The service and the models behind it have their
+  own terms and prices; you need your own account.
+
 ## Ideas credited: cinecode
 
 Some techniques are adapted from [sarpstar/cinecode](https://github.com/sarpstar/cinecode) (MIT),

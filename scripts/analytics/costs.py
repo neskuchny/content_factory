@@ -5,6 +5,8 @@ Input:
   clients/<c>/requests/*/                      - one-off requests
   clients/<c>/weeks/*/04-production/*/         - videos of the weekly plan
   in each: production/final/manifest.json -> "credits" (a number or a dict with "total");
+           and "usd_direct" (a number or a dict per gateway, e.g. {"treg": 0.42}): money spent
+           directly in dollars, not in Higgsfield credits; it is added to the $ column;
            otherwise production/costs.md | cost.md | costs.md in the video folder | weeks/<W>/costs.md
            (looks for a line with "total" / "total spent" and the number on it; not found -> "no data")
   config/pricing.yaml -> higgsfield.credit_usd
@@ -177,6 +179,21 @@ def credits_from_md(text: str, unit_id: str = None):
     return found
 
 
+def usd_direct_from_manifest(m):
+    """Dollars spent directly (per-call gateways such as treg): a number or a dict of numbers."""
+    if not isinstance(m, dict) or "__error__" in m or "usd_direct" not in m:
+        return None
+    v = m["usd_direct"]
+    if isinstance(v, bool):
+        return None
+    if isinstance(v, (int, float)):
+        return float(v)
+    if isinstance(v, dict):
+        nums = [x for x in v.values() if isinstance(x, (int, float)) and not isinstance(x, bool)]
+        return float(sum(nums)) if nums else None
+    return None
+
+
 def credits_of(unit_dir: Path, week_dir: Path = None):
     """(credits | None, source string)."""
     # 1) reconciled fact: production/credits.json {"credits": number, "source": "..."} takes priority over everything
@@ -272,15 +289,21 @@ def collect(client: str):
         week_dir = (client_dir / "weeks" / week) if week else None
         flow, flow_src = flow_of(udir)
         credits, credits_src = credits_of(udir, week_dir)
-        usd = round(credits * rate, 4) if (credits is not None and rate is not None) else None
-        verdict, verdict_src = last_verdict(udir)
         manifest = load_manifest(udir)
+        direct = usd_direct_from_manifest(manifest)
+        if credits is None and direct is not None:
+            credits, credits_src = 0.0, "no credit data; spend is in final/manifest.json -> usd_direct"
+        usd = round(credits * rate, 4) if (credits is not None and rate is not None) else None
+        if direct is not None:
+            usd = round((usd or 0.0) + direct, 4)
+            credits_src += f"; usd_direct ${direct:g}"
+        verdict, verdict_src = last_verdict(udir)
         finals, replaced = final_videos(udir)
         n = len(finals)
         rows.append({
             "id": uid, "kind": kind, "week": week, "dir": rel(udir),
             "flow": flow, "flow_src": flow_src,
-            "credits": credits, "credits_src": credits_src, "usd": usd,
+            "credits": credits, "credits_src": credits_src, "usd": usd, "usd_direct": direct,
             "verdict": verdict, "verdict_src": verdict_src,
             "finals": [rel(p) for p in finals], "replaced": [rel(p) for p in replaced],
             "light": [rel(p) for p in light_videos(udir)],
@@ -291,11 +314,12 @@ def collect(client: str):
         })
     known = [r for r in rows if r["credits"] is not None]
     total_cr = round(sum(r["credits"] for r in known), 4)
-    total_usd = round(total_cr * rate, 4) if rate is not None else None
+    total_direct = round(sum(r["usd_direct"] or 0.0 for r in known), 4)
+    total_usd = round(total_cr * rate + total_direct, 4) if rate is not None else None
     total_videos = sum(len(r["finals"]) for r in known)
     return {
         "client": client, "rate": rate, "rate_src": rate_src, "rows": rows,
-        "total_credits": total_cr, "total_usd": total_usd,
+        "total_credits": total_cr, "total_usd": total_usd, "total_usd_direct": total_direct,
         "total_videos_with_cost": total_videos,
         "usd_per_video_avg": round(total_usd / total_videos, 4) if (total_usd is not None and total_videos) else None,
         "unknown": [r["id"] for r in rows if r["credits"] is None],
@@ -348,8 +372,12 @@ def render_md(data):
             v=verdict_text(r).replace("|", "/"), ver=versions_text(r),
             per=fmt_usd(r["usd_per_video"]) if r["finals"] else "—"))
     L += ["", "## Total",
-          f"- Credits across requests with known spend: **{fmt_num(data['total_credits'])}** = **{fmt_usd(data['total_usd'])}**.",
+          f"- Known spend: **{fmt_num(data['total_credits'])}** Higgsfield credits; in dollars, credits plus direct "
+          f"spend: **{fmt_usd(data['total_usd'])}**.",
           f"- Final videos in these requests: {data['total_videos_with_cost']}; on average {fmt_usd(data['usd_per_video_avg'])} per video."]
+    if data["total_usd_direct"]:
+        L.append(f"- Of that, paid directly in dollars (per-call gateways such as treg, `usd_direct` in "
+                 f"the manifest): **{fmt_usd(data['total_usd_direct'])}**.")
     if data["unknown"]:
         L.append(f"- No spend data: {', '.join(data['unknown'])}. Not included in the total.")
     L += ["", "## Where the numbers come from"]

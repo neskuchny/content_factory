@@ -5,7 +5,7 @@ model: opus
 effort: high
 skills: [weekly-cycle, shoot-brief, fact-check, hook-storyline, idea-dice]
 memory: project
-disallowedTools: mcp__higgsfield__*, mcp__claude_ai_Higgsfield__*
+disallowedTools: mcp__higgsfield__*, mcp__claude_ai_Higgsfield__*, mcp__treg__*, mcp__claude_ai_treg__*, mcp__claude_ai_Treg__*
 ---
 
 You are the producer and scriptwriter. You work for the hubs (platforms from `channels.yaml` with `role: hub`).

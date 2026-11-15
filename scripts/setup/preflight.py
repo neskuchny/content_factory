@@ -105,16 +105,24 @@ def check_disk():
                 "rendering")
 
 
+MCP_SERVERS = {
+    "higgsfield": ("https://mcp.higgsfield.ai/mcp", "AI images and video (paid credits on your own account)"),
+    "treg": ("https://treg.to/mcp/v2/", "many video, image and voice models on one prepaid dollar balance"),
+}
+
+
 def check_mcp():
     try:
-        cfg = json.loads((ROOT / ".mcp.json").read_text(encoding="utf-8"))
-        has = "higgsfield" in cfg.get("mcpServers", {})
+        servers = json.loads((ROOT / ".mcp.json").read_text(encoding="utf-8")).get("mcpServers", {})
     except (OSError, ValueError):
-        has = False
-    return item("higgsfield (MCP)", "optional", has, "listed in .mcp.json (account not checked)" if has else None,
-                "Add the connector https://mcp.higgsfield.ai/mcp in Claude settings -> Connectors. "
-                "Whether your account is connected can only be checked from inside Claude.",
-                "AI images and video (paid credits on your own account)")
+        servers = {}
+    out = []
+    for name, (url, unlocks) in MCP_SERVERS.items():
+        has = name in servers
+        out.append(item(f"{name} (MCP)", "optional", has, "listed in .mcp.json (account not checked)" if has else None,
+                        f"Add the connector {url} in Claude settings -> Connectors. "
+                        "Whether your account is connected can only be checked from inside Claude.", unlocks))
+    return out
 
 
 def git_state():
@@ -196,7 +204,7 @@ def collect():
     items = [check_python(), check_mode(),
              check_module("yaml", "pyyaml", "required", "every factory script"),
              check_module("PIL", "pillow", "optional", "cover thumbnails on the dashboard"),
-             check_ffmpeg(), check_node(), check_chromium(), check_disk(), check_mcp(), *git_items(g)]
+             check_ffmpeg(), check_node(), check_chromium(), check_disk(), *check_mcp(), *git_items(g)]
     ac = active_client()
     return {"items": items, "git": g, "cloud_session": cloud(), "active_client": ac, "clients": clients(),
             "setup_in_progress": setups_in_progress(),

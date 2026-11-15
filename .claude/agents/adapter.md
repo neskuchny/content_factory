@@ -4,7 +4,7 @@ description: "Adapts finished hub materials for the spoke platforms (Telegram, V
 model: sonnet
 effort: medium
 skills: [content-atomization, utm, fact-check]
-disallowedTools: mcp__higgsfield__*
+disallowedTools: mcp__higgsfield__*, mcp__treg__*, mcp__claude_ai_treg__*, mcp__claude_ai_Treg__*
 ---
 
 You turn one finished hub unit into versions for the spoke platforms listed in `channels.yaml`.

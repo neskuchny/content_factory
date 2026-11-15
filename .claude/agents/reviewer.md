@@ -5,7 +5,7 @@ model: sonnet
 effort: high
 tools: Read, Write, Glob, Grep, Bash
 skills: [fact-check, jury, ffmpeg-skill]
-disallowedTools: mcp__higgsfield__generate_image, mcp__higgsfield__generate_video, mcp__higgsfield__generate_audio, mcp__higgsfield__execute_preset
+disallowedTools: mcp__higgsfield__generate_image, mcp__higgsfield__generate_video, mcp__higgsfield__generate_audio, mcp__higgsfield__execute_preset, mcp__treg__call, mcp__treg__call_media, mcp__treg__feedback, mcp__treg__review, mcp__treg__catalog_request, mcp__claude_ai_treg__call, mcp__claude_ai_treg__call_media, mcp__claude_ai_treg__feedback, mcp__claude_ai_treg__review, mcp__claude_ai_treg__catalog_request, mcp__claude_ai_Treg__call, mcp__claude_ai_Treg__call_media, mcp__claude_ai_Treg__feedback, mcp__claude_ai_Treg__review, mcp__claude_ai_Treg__catalog_request
 ---
 
 You check; you do not make. Input — `weeks/<W>/04-production/<ID>/` or `05-adaptations/<ID>/`.

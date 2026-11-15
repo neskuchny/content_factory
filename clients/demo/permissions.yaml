@@ -12,6 +12,7 @@ messages:
 
 spending:
   generation_credits_week: 2      # owner decision 2027-01-04: up to 2 Higgsfield credits per week without asking
+  treg_usd_week: 0                # treg not connected: every paid treg call would need the owner's yes
   request_credits:                # one-off limits per request (owner decisions)
     REQ-20270111-1: 0             # 2027-01-12: code-only, no paid generation
     REQ-20270118-1: 0             # 2027-01-18: code film (f18), no paid generation
