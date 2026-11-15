@@ -16,8 +16,9 @@ import yaml
 
 REPO = Path(__file__).resolve().parents[1]
 AGENTS = REPO / ".claude" / "agents"
-TREG_SERVERS = ("treg", "claude_ai_treg", "claude_ai_Treg")   # local .mcp.json name and claude.ai connector names
-PAID_TREG = ("call", "call_media")
+# the .mcp.json name, the claude.ai connector name (it is really called treg_to) and case variants
+TREG_SERVERS = ("treg", "treg_to", "claude_ai_treg", "claude_ai_Treg", "claude_ai_treg_to")
+PAID_TREG = ("call", "call_media", "catalog_call_read", "catalog_call_write")
 OUTBOUND_TREG = ("feedback", "review", "catalog_request")      # send data to treg
 
 
@@ -82,7 +83,7 @@ class TregConfig(unittest.TestCase):
 
     def test_gateway_skill_keeps_the_factory_rules(self):
         text = (REPO / ".claude" / "skills" / "treg-gateway" / "SKILL.md").read_text(encoding="utf-8")
-        for must in ("treg_usd_week", "usd_direct", "Estimate before spending", "factory rules win",
+        for must in ("treg_usd_week", "treg_paused", "catalog_call_read", "catalog_call_write", "usd_direct", "Estimate before spending", "factory rules win",
                      "curl", "treg scan", "labelled", "by code only", "consents.md"):
             self.assertIn(must, text)
 
