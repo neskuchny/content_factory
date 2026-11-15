@@ -92,7 +92,7 @@ inspected by eye, corrected, and resumed from the same place.
 |---|---|---|---|
 | **Constitution** | Stages, gates, prohibitions, planning rules | `CLAUDE.md` | Charter and safety rules |
 | **Roles** | 11 agents: model, thinking depth, tools, allowed MCPs, prompt | `.claude/agents/*.md` | Job descriptions |
-| **Skills** | 22 skills (incl. the vendored ffmpeg-skill and the `setup` first-run wizard): how to do a specific job (skeleton, hooks, seams, approval, memory compaction…) | `.claude/skills/*/SKILL.md` | Process cards |
+| **Skills** | 23 skills (incl. the vendored ffmpeg-skill, the `setup` first-run wizard and `treg-gateway`): how to do a specific job (skeleton, hooks, seams, approval, memory compaction…) | `.claude/skills/*/SKILL.md` | Process cards |
 | **Flows** | 19 flows (f00–f18) + a library of atomic steps | `flows/` | Routing cards for products |
 | **Configs** | Format → engine, permissions matrix | `config/` | Workshop regulations |
 | **Client data** | Passport, platforms, quotas, permissions, brand, product, sources, memory, weeks | `clients/<c>/` | The customer and their warehouse |

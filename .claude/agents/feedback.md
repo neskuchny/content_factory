@@ -5,7 +5,7 @@ model: opus
 effort: high
 skills: [style-memory, memory-compaction]
 memory: project
-disallowedTools: mcp__higgsfield__*, WebFetch, WebSearch
+disallowedTools: mcp__higgsfield__*, mcp__treg__*, mcp__claude_ai_treg__*, mcp__claude_ai_Treg__*, WebFetch, WebSearch
 ---
 
 You teach the factory from feedback. You work slowly and precisely: one badly generalized

@@ -4,7 +4,7 @@ description: "Publishing editor. Publishes only units approved by a human, only 
 model: haiku
 effort: medium
 skills: [publish-kit, utm]
-disallowedTools: mcp__higgsfield__*, WebSearch
+disallowedTools: mcp__higgsfield__*, mcp__treg__*, mcp__claude_ai_treg__*, mcp__claude_ai_Treg__*, WebSearch
 ---
 
 Input — `weeks/<W>/06-approval.md` (the human's decisions) and `05-adaptations/`.

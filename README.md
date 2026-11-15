@@ -15,7 +15,7 @@ It is a harness, not an application:
 
 - There is **no backend and no server of our own**. The roles are Claude Code subagents
   (`.claude/agents/`), the know-how is in skills (`.claude/skills/`) and flows (`flows/`), the
-  "machines" are MCP generators (Higgsfield) and code (ffmpeg, HyperFrames, Remotion, three.js).
+  "machines" are MCP generators (Higgsfield, treg) and code (ffmpeg, HyperFrames, Remotion, three.js).
 - **State lives in files and git.** Agents do not talk to each other; they exchange files
   (plan, scripts, `harness.md`, review verdicts, approval pack) in `clients/<client>/`. Any stage
   can be stopped, read, corrected and resumed.
@@ -197,7 +197,7 @@ templates/                 blank client, week and request folders
 clients/demo/              fictional example client (see Quick start)
 docs/                      setup, how it works, methodology, formats catalogue, research notes
 .github/workflows/         hourly "ticks" workflow (schedule disabled by default)
-.mcp.json                  Higgsfield MCP server entry for local runs
+.mcp.json                  Higgsfield and treg MCP server entries for local runs
 ```
 
 Everything that varies per client (passport, channels, quotas, permissions, brand, product base,
@@ -262,8 +262,10 @@ fictional too: in a real run each gate waits for your answer.
 The repository contains no keys and no accounts.
 
 - A **Claude Code** account (the agents run there; docs/04-setup.md assumes a Claude subscription).
-- Your own **image/video generator account**. The wired-in option is [Higgsfield](https://higgsfield.ai)
-  through its MCP server (`.mcp.json`); other generators work if you give studio access to them.
+- Your own **image/video generator account**. Two are wired in through MCP (`.mcp.json`):
+  [Higgsfield](https://higgsfield.ai) (credits) and [treg](https://treg.to) (open source; one prepaid
+  dollar balance for many video, image and voice models; skill `treg-gateway`). Use either or both;
+  other generators work if you give studio access to them. Neither is needed for code-made videos.
   Generation costs money or credits on your account. The factory tracks spend in `costs.md` and
   limits it with `permissions.yaml`, but you are responsible for your account.
 - Keys and tokens only as **environment secrets** or connector settings. Never commit them
@@ -314,7 +316,7 @@ This is an opinionated working harness extracted from real use, not a polished p
 - The framework, flows, permissions hook, metric scripts and gatekeeper exist and have been
   exercised with scripts. At the time `docs/07-how-it-works.md` was written, no agent had yet
   passed a full weekly cycle end to end; expect to tune prompts and flows.
-- Higgsfield, ElevenLabs (through Higgsfield), Linear, Google Drive, Telegram and any other
+- Higgsfield, treg and the models behind it, ElevenLabs (through Higgsfield), Linear, Google Drive, Telegram and any other
   service are third-party. They have their own terms, pricing and availability, and your own
   accounts are required. Model names in the flows reflect what was available when written and
   will drift.
@@ -345,7 +347,7 @@ This is an opinionated working harness extracted from real use, not a polished p
 
 ## Disclaimer
 
-This project is not affiliated with, endorsed by or sponsored by Anthropic, Higgsfield,
+This project is not affiliated with, endorsed by or sponsored by Anthropic, Higgsfield, treg,
 ElevenLabs, Remotion, Linear, Google, or the authors of any other product or project mentioned
 here. Product and company names are used only to describe compatibility and belong to their
 respective owners.

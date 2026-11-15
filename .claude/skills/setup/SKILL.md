@@ -94,7 +94,8 @@ If the person already gave a questionnaire or spreadsheet, ask only what it does
    *e.g. "Baker Tom agrees to filming, he will message you; customers: frame them out."*
 9. Your audience's language; your time zone; who approves videos, how the pack should reach them and
    how fast they answer. *e.g. "English; Europe/London; I approve in Telegram the same day."*
-10. Budget for paid AI generation per week (0 is fine: videos made with code cost nothing).
+10. Budget for paid AI generation per week (0 is fine: videos made with code cost nothing), and which
+    account you have or want: Higgsfield (credits), treg (dollars), or none yet.
 
 ## Stage 4 — Build the client
 1. Pick a short slug (latin letters, digits, dashes) and run
@@ -132,6 +133,11 @@ as proposals: `--keep-proposed`). Record the confirmation with its date in `setu
   in `.mcp.json`, which says nothing about their account). Check it with a read-only call (balance)
   if they agree. Without it the factory still makes code films (`flows/f18`), infographics (`f10`) and
   cuts of their own footage (`f07`).
+- **treg** (one prepaid dollar balance for many video, image and voice models; open source): also only
+  if the budget is above 0 or they ask. Connector `https://treg.to/mcp/v2/` in Claude settings →
+  Connectors, they sign in there (locally it is listed in `.mcp.json`). Put their weekly dollar limit
+  into the draft `permissions.yaml → spending.treg_usd_week`. Never run treg's `curl … | sh` installer
+  or `treg scan/upload`; details in the `treg-gateway` skill.
 - **Linear** (task board), otherwise the board is `weeks/<W>/board.md`.
 - **Google Drive** (approval pack and finished files), otherwise a file or an artifact; match it to
   the approval route from question 9.

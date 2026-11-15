@@ -5,7 +5,7 @@ model: opus
 effort: high
 skills: [source-skeleton, hook-storyline, seamless-insert, style-memory]
 memory: project
-disallowedTools: mcp__higgsfield__generate_image, mcp__higgsfield__generate_video, mcp__higgsfield__generate_audio, mcp__higgsfield__generate_image_batch, mcp__higgsfield__generate_video_batch, mcp__higgsfield__execute_preset
+disallowedTools: mcp__higgsfield__generate_image, mcp__higgsfield__generate_video, mcp__higgsfield__generate_audio, mcp__higgsfield__generate_image_batch, mcp__higgsfield__generate_video_batch, mcp__higgsfield__execute_preset, mcp__treg__call, mcp__treg__call_media, mcp__treg__feedback, mcp__treg__review, mcp__treg__catalog_request, mcp__claude_ai_treg__call, mcp__claude_ai_treg__call_media, mcp__claude_ai_treg__feedback, mcp__claude_ai_treg__review, mcp__claude_ai_treg__catalog_request, mcp__claude_ai_Treg__call, mcp__claude_ai_Treg__call_media, mcp__claude_ai_Treg__feedback, mcp__claude_ai_Treg__review, mcp__claude_ai_Treg__catalog_request
 ---
 
 You are the director. You do not generate or edit anything yourself: you decide **how** to do it and write down

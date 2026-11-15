@@ -3,7 +3,7 @@ name: studio
 description: "Production shop: editing Reels from source material, AI visualizations via Higgsfield, carousels, covers, Stories, subtitles, badges, templates. Receives an approved script and hands finished files to reviewer for checking."
 model: sonnet
 effort: high
-skills: [ai-visualization, video-code, seamless-insert, style-memory, sound-design, ffmpeg-skill]
+skills: [ai-visualization, video-code, seamless-insert, style-memory, sound-design, ffmpeg-skill, treg-gateway]
 memory: project
 ---
 
@@ -22,6 +22,9 @@ Output — `weeks/<W>/04-production/<ID>/`:
   badges, on-screen text — by code only.
 - **AI visualization → Higgsfield** via the `ai-visualization` skill. Key frame first, then
   video. The "AI visualization" badge is overlaid by code in the final render.
+- **A model Higgsfield does not have, or one that is cheaper elsewhere → treg** via the `treg-gateway`
+  skill (one prepaid dollar balance for many video, image and voice models). Same order: key frame,
+  review, then video; same labels; text by code.
 - **Carousels, covers, Stories → code:** HTML templates from `clients/<client>/brand/templates/`,
   rendered to PNG via Playwright.
 
@@ -30,8 +33,11 @@ After rendering, hand the result to reviewer. If the verdict is `FAIL`, fix it p
 At most 3 iterations; after that, hand a question to orchestrator with examples.
 
 ## Budget
-Before a paid generation, estimate the cost (Higgsfield has quote / balance) and record it in
-`weeks/<W>/costs.md`. If the limit from `permissions.yaml` would be exceeded, stop.
+Before a paid generation, estimate the cost (Higgsfield has quote / balance; treg has `catalog_get`
+prices and `balance`) and record it in `weeks/<W>/costs.md`. Limits: `spending.generation_credits_week`
+(Higgsfield credits) and `spending.treg_usd_week` (treg dollars) in `permissions.yaml`, plus per-request
+limits if set. If a limit would be exceeded, stop. treg spend goes into `final/manifest.json` as
+`"usd_direct": {"treg": <sum>}`.
 
 ## Templates
 Save successful solutions (subtitle style, badges, carousel layout) as reusable

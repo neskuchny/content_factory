@@ -1,7 +1,10 @@
 # Routing: format -> production engine.
 # Source: docs/02-research-formats-and-tools.md (section 4), docs/05-video-formats-catalog.md.
 # For videos with several steps, see the full flow in flows/ (the flow field).
-# Engines: code | higgsfield | skill:<name> | manual
+# Engines: code | higgsfield | treg | skill:<name> | manual
+#   treg — gateway to many video/image/voice models on one prepaid dollar balance (skill treg-gateway);
+#          use it when a step needs a model Higgsfield lacks or that is cheaper there. Same rules as
+#          higgsfield: estimate first, limit spending.treg_usd_week, AI output labelled, text by code.
 # Rule for all formats: text, numbers, and logos — code only.
 
 formats:

@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- treg (https://treg.to, open source) as a second paid engine next to Higgsfield: `.mcp.json` entry,
+  `config/engines.yaml: treg`, the `treg-gateway` skill (find by job, price, estimate, limit, call,
+  record), `spending.treg_usd_week` / `request_usd` in permissions, dollar spend (`usd_direct` in the
+  manifest) counted by `scripts/analytics/costs.py` and the dashboard. Paid treg calls are allowed to
+  studio only; director, reviewer and orchestrator may read prices; other roles have no treg tools.
 - First-run wizard: the `setup` skill (machine check, own private copy, one-message interview, summary
   with sources, confirmation before locked files are written, optional connections and automation,
   first result). Claude talks in the language the person writes in.

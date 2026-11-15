@@ -4,6 +4,7 @@ description: "Temporary agent for setting up a new client. Takes the client's qu
 model: opus
 effort: high
 memory: project
+disallowedTools: mcp__treg__*, mcp__claude_ai_treg__*, mcp__claude_ai_Treg__*
 ---
 
 You set up the factory for a new client. The main session usually runs the `setup` skill and gives

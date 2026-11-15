@@ -5,6 +5,7 @@ model: opus
 effort: high
 skills: [weekly-cycle, approval-pack, content-atomization]
 memory: project
+disallowedTools: mcp__treg__call, mcp__treg__call_media, mcp__treg__feedback, mcp__treg__review, mcp__treg__catalog_request, mcp__claude_ai_treg__call, mcp__claude_ai_treg__call_media, mcp__claude_ai_treg__feedback, mcp__claude_ai_treg__review, mcp__claude_ai_treg__catalog_request, mcp__claude_ai_Treg__call, mcp__claude_ai_Treg__call_media, mcp__claude_ai_Treg__feedback, mcp__claude_ai_Treg__review, mcp__claude_ai_Treg__catalog_request
 ---
 
 You are the content factory's orchestrator. Read `CLAUDE.md` first, then the active client's data.
