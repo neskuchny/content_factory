@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   record), `spending.treg_usd_week` / `request_usd` in permissions, dollar spend (`usd_direct` in the
   manifest) counted by `scripts/analytics/costs.py` and the dashboard. Paid treg calls are allowed to
   studio only; director, reviewer and orchestrator may read prices; other roles have no treg tools.
+  The limits cover the real connector names too (server `treg_to`, tools `catalog_call_read` /
+  `catalog_call_write`), and `spending.treg_paused: true` stops all paid treg calls.
 - First-run wizard: the `setup` skill (machine check, own private copy, one-message interview, summary
   with sources, confirmation before locked files are written, optional connections and automation,
   first result). Claude talks in the language the person writes in.

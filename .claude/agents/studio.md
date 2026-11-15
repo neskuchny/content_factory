@@ -35,7 +35,8 @@ At most 3 iterations; after that, hand a question to orchestrator with examples.
 ## Budget
 Before a paid generation, estimate the cost (Higgsfield has quote / balance; treg has `catalog_get`
 prices and `balance`) and record it in `weeks/<W>/costs.md`. Limits: `spending.generation_credits_week`
-(Higgsfield credits) and `spending.treg_usd_week` (treg dollars) in `permissions.yaml`, plus per-request
+(Higgsfield credits) and `spending.treg_usd_week` (treg dollars; with `spending.treg_paused: true` no paid
+treg calls at all) in `permissions.yaml`, plus per-request
 limits if set. If a limit would be exceeded, stop. treg spend goes into `final/manifest.json` as
 `"usd_direct": {"treg": <sum>}`.
 
